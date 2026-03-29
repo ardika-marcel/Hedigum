@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hedigum</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
-<!-- Supabase JS v2 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
@@ -19,7 +18,6 @@
     --red: #ff4b4b;
     --red-dark: #d32f2f;
     --purple: #ce82ff;
-    --orange: #ff9600;
     --bg: #f7f7f7;
     --card: #ffffff;
     --border: #e5e5e5;
@@ -28,427 +26,169 @@
     --shadow: 0 4px 0 rgba(0,0,0,0.12);
     --shadow-sm: 0 2px 0 rgba(0,0,0,0.10);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
-
-  /* ===== LANDING ===== */
-  #landing {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background: linear-gradient(160deg, #23d160 0%, #1cb0f6 100%);
-    padding: 24px;
-  }
-
-  .logo-box { text-align: center; margin-bottom: 40px; }
-  .logo-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 64px;
-    color: #fff;
-    letter-spacing: 2px;
-    text-shadow: 0 6px 0 rgba(0,0,0,0.15);
-    line-height: 1;
-  }
-  .logo-subtitle {
-    font-size: 16px;
-    color: rgba(255,255,255,0.85);
-    font-weight: 700;
-    margin-top: 8px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-  .mascot {
-    font-size: 80px;
-    margin-bottom: 16px;
-    animation: bounce 1.5s ease-in-out infinite;
-  }
-  @keyframes bounce {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
-
-  .panel-cards {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 720px;
-    width: 100%;
-  }
-  .panel-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 28px 24px;
-    flex: 1;
-    min-width: 180px;
-    max-width: 220px;
-    text-align: center;
-    cursor: pointer;
-    border: 3px solid transparent;
-    box-shadow: 0 6px 0 rgba(0,0,0,0.15);
-    transition: transform 0.1s, box-shadow 0.1s;
-    user-select: none;
-  }
-  .panel-card:hover { transform: translateY(-3px); box-shadow: 0 9px 0 rgba(0,0,0,0.15); }
-  .panel-card:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,0.15); }
-  .panel-card .icon { font-size: 44px; margin-bottom: 10px; }
-  .panel-card .card-title { font-size: 18px; font-weight: 900; color: var(--text); }
-  .panel-card .card-sub { font-size: 13px; color: var(--text-light); font-weight: 600; margin-top: 4px; }
-  .panel-card.admin1 { border-color: var(--green); }
-  .panel-card.admin2 { border-color: var(--purple); }
-  .panel-card.employee { border-color: var(--blue); }
-
-  /* ===== SCREENS ===== */
-  .screen { display: none; min-height: 100vh; }
-  .screen.active { display: block; }
-
-  /* ===== TOP BAR ===== */
-  .topbar {
-    display: flex;
-    align-items: center;
-    padding: 14px 20px;
-    background: #fff;
-    border-bottom: 3px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .topbar .back-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    margin-right: 12px;
-    padding: 4px 8px;
-    border-radius: 10px;
-    transition: background 0.15s;
-  }
-  .topbar .back-btn:hover { background: var(--bg); }
-  .topbar .panel-name { font-family: 'Fredoka One', cursive; font-size: 26px; color: var(--text); }
-  .topbar .badge {
-    margin-left: auto;
-    background: var(--green-light);
-    color: var(--green-dark);
-    font-weight: 800;
-    font-size: 13px;
-    border-radius: 20px;
-    padding: 4px 12px;
-  }
-
-  /* ===== MODAL ===== */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal {
-    background: #fff;
-    border-radius: 24px;
-    padding: 32px 28px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 12px 0 rgba(0,0,0,0.15);
-    animation: popIn 0.2s ease;
-  }
-  @keyframes popIn {
-    from { transform: scale(0.85); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
-  .modal h2 { font-family: 'Fredoka One', cursive; font-size: 24px; margin-bottom: 20px; }
-  .modal label { font-weight: 700; font-size: 14px; display: block; margin-bottom: 6px; margin-top: 14px; }
-  .modal input, .modal select {
-    width: 100%;
-    padding: 12px 14px;
-    border: 2.5px solid var(--border);
-    border-radius: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    outline: none;
-    transition: border 0.15s;
-  }
-  .modal input:focus, .modal select:focus { border-color: var(--blue); }
-  .modal-btns { display: flex; gap: 12px; margin-top: 22px; }
-
-  /* ===== BUTTONS ===== */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 12px 20px;
-    border-radius: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 15px;
-    border: none;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    transition: transform 0.1s, box-shadow 0.1s;
-    user-select: none;
-  }
-  .btn:active { transform: translateY(3px); box-shadow: none; }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-green { background: var(--green); color: #fff; box-shadow: 0 4px 0 var(--green-dark); }
-  .btn-green:active { box-shadow: 0 1px 0 var(--green-dark); }
-  .btn-blue { background: var(--blue); color: #fff; box-shadow: 0 4px 0 var(--blue-dark); }
-  .btn-blue:active { box-shadow: 0 1px 0 var(--blue-dark); }
-  .btn-red { background: var(--red); color: #fff; box-shadow: 0 4px 0 var(--red-dark); }
-  .btn-red:active { box-shadow: 0 1px 0 var(--red-dark); }
-  .btn-yellow { background: var(--yellow); color: #fff; box-shadow: 0 4px 0 var(--yellow-dark); }
-  .btn-yellow:active { box-shadow: 0 1px 0 var(--yellow-dark); }
-  .btn-purple { background: var(--purple); color: #fff; box-shadow: 0 4px 0 #9b59b6; }
-  .btn-gray { background: #e5e5e5; color: #888; box-shadow: 0 4px 0 #ccc; }
-  .btn-gray:active { box-shadow: 0 1px 0 #ccc; }
-  .btn-sm { padding: 8px 14px; font-size: 13px; border-radius: 10px; }
-  .btn-full { width: 100%; }
-
-  /* ===== CONTENT ===== */
-  .content { padding: 20px; max-width: 800px; margin: 0 auto; }
-
-  /* ===== CARD ===== */
-  .card {
-    background: var(--card);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 16px;
-    border: 2.5px solid var(--border);
-    box-shadow: var(--shadow-sm);
-  }
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .card h3 { font-family: 'Fredoka One', cursive; font-size: 20px; }
-
-  /* ===== STAT STRIP ===== */
-  .stat-strip {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  .stat-box {
-    flex: 1;
-    min-width: 120px;
-    background: var(--card);
-    border-radius: 16px;
-    padding: 16px;
-    border: 2.5px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    text-align: center;
-  }
-  .stat-box .stat-label { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
-  .stat-box .stat-val { font-family: 'Fredoka One', cursive; font-size: 22px; margin-top: 4px; }
-  .stat-box.green .stat-val { color: var(--green); }
-  .stat-box.blue .stat-val { color: var(--blue); }
-  .stat-box.red .stat-val { color: var(--red); }
-  .stat-box.purple .stat-val { color: var(--purple); }
-  .stat-box.yellow .stat-val { color: var(--yellow-dark); }
-
-  /* ===== JOB CARD ===== */
-  .job-card {
-    background: var(--card);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 12px;
-    border: 2.5px solid var(--border);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
-  }
-  .job-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 5px;
-    border-radius: 5px 0 0 5px;
-  }
-  .job-card.open::before { background: var(--green); }
-  .job-card.overdue::before { background: var(--red); }
-  .job-title { font-weight: 900; font-size: 16px; margin-bottom: 6px; }
-  .job-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-  .job-tag { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-  .tag-bonus { background: #d7ffb8; color: var(--green-dark); }
-  .tag-penalty { background: #ffe0e0; color: var(--red-dark); }
-  .tag-deadline { background: #fff3cd; color: #856404; }
-  .tag-status-pending { background: #fff3cd; color: #856404; }
-  .tag-status-approved { background: #d7ffb8; color: var(--green-dark); }
-  .tag-status-rejected { background: #ffe0e0; color: var(--red-dark); }
-  .tag-status-overdue { background: #ffe0e0; color: var(--red-dark); }
-  .tag-status-open { background: #e0f0ff; color: var(--blue-dark); }
-  .job-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-  /* ===== APP LIST ===== */
-  .app-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 14px;
-    background: var(--bg);
-    border-radius: 12px;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .app-item .app-name { font-weight: 800; font-size: 14px; }
-  .app-item .app-sub { font-size: 12px; color: var(--text-light); font-weight: 600; }
-  .app-item-actions { display: flex; gap: 6px; }
-
-  /* ===== SECTION TITLE ===== */
-  .section-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 18px;
-    margin-bottom: 12px;
-    color: var(--text-light);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* ===== TOAST ===== */
-  #toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: var(--text);
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-weight: 700;
-    font-size: 14px;
-    z-index: 9999;
-    transition: transform 0.3s ease;
-    white-space: nowrap;
-  }
-  #toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* ===== LOGIN ===== */
-  .login-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    padding: 20px;
-  }
-  .login-box {
-    background: #fff;
-    border-radius: 24px;
-    padding: 32px;
-    width: 100%;
-    max-width: 360px;
-    box-shadow: 0 8px 0 rgba(0,0,0,0.12);
-    border: 2.5px solid var(--border);
-    text-align: center;
-  }
-  .login-box .lock-icon { font-size: 50px; margin-bottom: 10px; }
-  .login-box h2 { font-family: 'Fredoka One', cursive; font-size: 26px; margin-bottom: 20px; }
-  .login-box input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 2.5px solid var(--border);
-    border-radius: 14px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: 3px;
-    outline: none;
-    margin-bottom: 16px;
-  }
-  .login-box input:focus { border-color: var(--blue); }
-
-  /* ===== SEPARATOR ===== */
-  .sep { height: 2px; background: var(--border); border-radius: 2px; margin: 18px 0; }
-
-  /* ===== EMPTY STATE ===== */
-  .empty-state { text-align: center; padding: 40px 20px; color: var(--text-light); }
-  .empty-state .e-icon { font-size: 48px; margin-bottom: 10px; }
-  .empty-state p { font-weight: 700; font-size: 15px; }
-
-  /* ===== ADMIN2 COMMISSION ===== */
-  .commission-big {
-    font-family: 'Fredoka One', cursive;
-    font-size: 42px;
-    color: var(--purple);
-    text-align: center;
-    margin: 10px 0;
-  }
-  .payment-history-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 14px;
-    background: var(--bg);
-    border-radius: 12px;
-    margin-bottom: 8px;
-  }
-  .payment-history-item .ph-amount { font-weight: 800; color: var(--purple); }
-  .payment-history-item .ph-date { font-size: 12px; color: var(--text-light); font-weight: 600; }
-
-  /* ===== LOADING SPINNER ===== */
-  .spinner-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(255,255,255,0.75);
-    z-index: 9998;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .spinner-overlay.active { display: flex; }
-  .spinner {
-    width: 44px; height: 44px;
-    border: 5px solid var(--border);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .spinner-label { font-weight: 800; font-size: 15px; color: var(--text-light); }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 500px) {
-    .panel-cards { flex-direction: column; align-items: center; }
-    .panel-card { max-width: 100%; width: 100%; }
-    .logo-title { font-size: 48px; }
-    .stat-strip { flex-direction: column; }
-    .modal-btns { flex-direction: column; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+ 
+  /* LANDING */
+  #landing { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; background:linear-gradient(160deg,#23d160 0%,#1cb0f6 100%); padding:24px; }
+  .logo-box { text-align:center; margin-bottom:40px; }
+  .logo-title { font-family:'Fredoka One',cursive; font-size:64px; color:#fff; letter-spacing:2px; text-shadow:0 6px 0 rgba(0,0,0,0.15); line-height:1; }
+  .logo-subtitle { font-size:16px; color:rgba(255,255,255,0.85); font-weight:700; margin-top:8px; letter-spacing:1px; text-transform:uppercase; }
+  .mascot { font-size:80px; margin-bottom:16px; animation:bounce 1.5s ease-in-out infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .panel-cards { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; max-width:720px; width:100%; }
+  .panel-card { background:#fff; border-radius:20px; padding:28px 24px; flex:1; min-width:180px; max-width:220px; text-align:center; cursor:pointer; border:3px solid transparent; box-shadow:0 6px 0 rgba(0,0,0,0.15); transition:transform 0.1s,box-shadow 0.1s; user-select:none; }
+  .panel-card:hover  { transform:translateY(-3px); box-shadow:0 9px 0 rgba(0,0,0,0.15); }
+  .panel-card:active { transform:translateY(3px);  box-shadow:0 2px 0 rgba(0,0,0,0.15); }
+  .panel-card .icon       { font-size:44px; margin-bottom:10px; }
+  .panel-card .card-title { font-size:18px; font-weight:900; color:var(--text); }
+  .panel-card .card-sub   { font-size:13px; color:var(--text-light); font-weight:600; margin-top:4px; }
+  .panel-card.admin1   { border-color:var(--green); }
+  .panel-card.admin2   { border-color:var(--purple); }
+  .panel-card.employee { border-color:var(--blue); }
+ 
+  /* SCREENS */
+  .screen { display:none; min-height:100vh; }
+  .screen.active { display:block; }
+ 
+  /* TOPBAR */
+  .topbar { display:flex; align-items:center; padding:14px 20px; background:#fff; border-bottom:3px solid var(--border); position:sticky; top:0; z-index:100; }
+  .topbar .back-btn { background:none; border:none; font-size:24px; cursor:pointer; margin-right:12px; padding:4px 8px; border-radius:10px; transition:background 0.15s; }
+  .topbar .back-btn:hover { background:var(--bg); }
+  .topbar .panel-name { font-family:'Fredoka One',cursive; font-size:26px; color:var(--text); }
+  .topbar .badge { margin-left:auto; background:var(--green-light); color:var(--green-dark); font-weight:800; font-size:13px; border-radius:20px; padding:4px 12px; }
+ 
+  /* LOADER */
+  .loader-overlay { display:none; position:fixed; inset:0; background:rgba(255,255,255,0.75); z-index:500; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
+  .loader-overlay.active { display:flex; }
+  .spinner { width:44px; height:44px; border:5px solid var(--border); border-top-color:var(--blue); border-radius:50%; animation:spin 0.7s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loader-overlay p { font-weight:800; font-size:14px; color:var(--text-light); }
+ 
+  /* MODAL */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:200; align-items:center; justify-content:center; padding:20px; }
+  .modal-overlay.active { display:flex; }
+  .modal { background:#fff; border-radius:24px; padding:32px 28px; width:100%; max-width:400px; box-shadow:0 12px 0 rgba(0,0,0,0.15); animation:popIn 0.2s ease; }
+  @keyframes popIn { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+  .modal h2 { font-family:'Fredoka One',cursive; font-size:24px; margin-bottom:20px; }
+  .modal label { font-weight:700; font-size:14px; display:block; margin-bottom:6px; margin-top:14px; }
+  .modal input,.modal select { width:100%; padding:12px 14px; border:2.5px solid var(--border); border-radius:14px; font-family:'Nunito',sans-serif; font-size:15px; font-weight:600; outline:none; transition:border 0.15s; }
+  .modal input:focus,.modal select:focus { border-color:var(--blue); }
+  .modal-btns { display:flex; gap:12px; margin-top:22px; }
+ 
+  /* BUTTONS */
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:12px 20px; border-radius:14px; font-family:'Nunito',sans-serif; font-weight:800; font-size:15px; border:none; cursor:pointer; box-shadow:var(--shadow); transition:transform 0.1s,box-shadow 0.1s; user-select:none; }
+  .btn:active   { transform:translateY(3px); box-shadow:none; }
+  .btn:hover    { transform:translateY(-2px); }
+  .btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+  .btn-green  { background:var(--green);  color:#fff; box-shadow:0 4px 0 var(--green-dark); }
+  .btn-green:active  { box-shadow:0 1px 0 var(--green-dark); }
+  .btn-blue   { background:var(--blue);   color:#fff; box-shadow:0 4px 0 var(--blue-dark); }
+  .btn-blue:active   { box-shadow:0 1px 0 var(--blue-dark); }
+  .btn-red    { background:var(--red);    color:#fff; box-shadow:0 4px 0 var(--red-dark); }
+  .btn-red:active    { box-shadow:0 1px 0 var(--red-dark); }
+  .btn-purple { background:var(--purple); color:#fff; box-shadow:0 4px 0 #9b59b6; }
+  .btn-gray   { background:#e5e5e5; color:#888; box-shadow:0 4px 0 #ccc; }
+  .btn-gray:active { box-shadow:0 1px 0 #ccc; }
+  .btn-sm   { padding:8px 14px; font-size:13px; border-radius:10px; }
+  .btn-full { width:100%; }
+ 
+  /* CONTENT */
+  .content { padding:20px; max-width:800px; margin:0 auto; }
+ 
+  /* CARD */
+  .card { background:var(--card); border-radius:20px; padding:20px; margin-bottom:16px; border:2.5px solid var(--border); box-shadow:var(--shadow-sm); }
+  .card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .card h3 { font-family:'Fredoka One',cursive; font-size:20px; }
+ 
+  /* STAT STRIP */
+  .stat-strip { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+  .stat-box { flex:1; min-width:120px; background:var(--card); border-radius:16px; padding:16px; border:2.5px solid var(--border); box-shadow:var(--shadow-sm); text-align:center; }
+  .stat-box .stat-label { font-size:12px; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:0.5px; }
+  .stat-box .stat-val   { font-family:'Fredoka One',cursive; font-size:22px; margin-top:4px; }
+  .stat-box.green  .stat-val { color:var(--green); }
+  .stat-box.blue   .stat-val { color:var(--blue); }
+  .stat-box.red    .stat-val { color:var(--red); }
+  .stat-box.purple .stat-val { color:var(--purple); }
+ 
+  /* JOB CARD */
+  .job-card { background:var(--card); border-radius:16px; padding:16px; margin-bottom:12px; border:2.5px solid var(--border); box-shadow:var(--shadow-sm); position:relative; overflow:hidden; }
+  .job-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:5px; border-radius:5px 0 0 5px; }
+  .job-card.open::before    { background:var(--green); }
+  .job-card.overdue::before { background:var(--red); }
+  .job-title { font-weight:900; font-size:16px; margin-bottom:6px; }
+  .job-meta  { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+  .job-tag { font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; }
+  .tag-bonus           { background:#d7ffb8; color:var(--green-dark); }
+  .tag-penalty         { background:#ffe0e0; color:var(--red-dark); }
+  .tag-deadline        { background:#fff3cd; color:#856404; }
+  .tag-status-pending  { background:#fff3cd; color:#856404; }
+  .tag-status-approved { background:#d7ffb8; color:var(--green-dark); }
+  .tag-status-rejected { background:#ffe0e0; color:var(--red-dark); }
+  .tag-status-overdue  { background:#ffe0e0; color:var(--red-dark); }
+  .tag-status-open     { background:#e0f0ff; color:var(--blue-dark); }
+  .job-actions { display:flex; gap:8px; flex-wrap:wrap; }
+ 
+  /* APP ITEM */
+  .app-item { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:var(--bg); border-radius:12px; margin-bottom:8px; flex-wrap:wrap; gap:8px; }
+  .app-item .app-name { font-weight:800; font-size:14px; }
+  .app-item .app-sub  { font-size:12px; color:var(--text-light); font-weight:600; }
+  .app-item-actions   { display:flex; gap:6px; }
+ 
+  /* SECTION TITLE */
+  .section-title { font-family:'Fredoka One',cursive; font-size:18px; margin-bottom:12px; color:var(--text-light); display:flex; align-items:center; gap:8px; }
+ 
+  /* TOAST */
+  #toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--text); color:#fff; padding:12px 24px; border-radius:30px; font-weight:700; font-size:14px; z-index:9999; transition:transform 0.3s ease; white-space:nowrap; }
+  #toast.show { transform:translateX(-50%) translateY(0); }
+ 
+  /* LOGIN */
+  .login-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
+  .login-box { background:#fff; border-radius:24px; padding:32px; width:100%; max-width:360px; box-shadow:0 8px 0 rgba(0,0,0,0.12); border:2.5px solid var(--border); text-align:center; }
+  .login-box .lock-icon { font-size:50px; margin-bottom:10px; }
+  .login-box h2 { font-family:'Fredoka One',cursive; font-size:26px; margin-bottom:20px; }
+  .login-box input { width:100%; padding:12px 16px; border:2.5px solid var(--border); border-radius:14px; font-family:'Nunito',sans-serif; font-size:16px; font-weight:700; text-align:center; letter-spacing:3px; outline:none; margin-bottom:16px; }
+  .login-box input:focus { border-color:var(--blue); }
+ 
+  /* SEP */
+  .sep { height:2px; background:var(--border); border-radius:2px; margin:18px 0; }
+ 
+  /* EMPTY */
+  .empty-state { text-align:center; padding:40px 20px; color:var(--text-light); }
+  .empty-state .e-icon { font-size:48px; margin-bottom:10px; }
+  .empty-state p { font-weight:700; font-size:15px; }
+ 
+  /* ADMIN2 */
+  .commission-big { font-family:'Fredoka One',cursive; font-size:42px; color:var(--purple); text-align:center; margin:10px 0; }
+ 
+  /* EMP SUMMARY */
+  .emp-summary-card { background:linear-gradient(135deg,#1cb0f6 0%,#0a91d1 100%); border-radius:20px; padding:20px; margin-bottom:16px; box-shadow:0 6px 0 rgba(10,145,209,0.4); }
+  .emp-summary-card .summary-title { font-family:'Fredoka One',cursive; font-size:18px; color:rgba(255,255,255,0.85); margin-bottom:14px; }
+  .emp-summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .emp-summary-item { background:rgba(255,255,255,0.2); border-radius:14px; padding:12px; text-align:center; }
+  .emp-summary-item .esi-label { font-size:11px; font-weight:700; color:rgba(255,255,255,0.75); text-transform:uppercase; letter-spacing:0.5px; }
+  .emp-summary-item .esi-val   { font-family:'Fredoka One',cursive; font-size:20px; color:#fff; margin-top:3px; }
+  .emp-summary-item.full-width { grid-column:1/-1; background:rgba(255,255,255,0.25); }
+  .emp-summary-item.highlight .esi-val { color:#d7ffb8; }
+ 
+  @media (max-width:500px) {
+    .panel-cards { flex-direction:column; align-items:center; }
+    .panel-card  { max-width:100%; width:100%; }
+    .logo-title  { font-size:48px; }
+    .stat-strip  { flex-direction:column; }
+    .modal-btns  { flex-direction:column; }
   }
 </style>
 </head>
 <body>
-
-<!-- SPINNER -->
-<div class="spinner-overlay" id="spinner">
+ 
+<div class="loader-overlay" id="loader">
   <div class="spinner"></div>
-  <div class="spinner-label">Loading…</div>
+  <p id="loader-msg">Loading…</p>
 </div>
-
-<!-- TOAST -->
+ 
 <div id="toast"></div>
-
+ 
 <!-- LANDING -->
 <div id="landing">
   <div class="logo-box">
@@ -457,77 +197,44 @@
     <div class="logo-subtitle">Work. Earn. Level Up.</div>
   </div>
   <div class="panel-cards">
-    <div class="panel-card admin1" onclick="openPanel('admin1')">
-      <div class="icon">👑</div>
-      <div class="card-title">Admin 1</div>
-      <div class="card-sub">Manage &amp; Approve</div>
-    </div>
-    <div class="panel-card employee" onclick="openPanel('employee')">
-      <div class="icon">⚡</div>
-      <div class="card-title">Employee</div>
-      <div class="card-sub">Complete Jobs</div>
-    </div>
-    <div class="panel-card admin2" onclick="openPanel('admin2')">
-      <div class="icon">💜</div>
-      <div class="card-title">Admin 2</div>
-      <div class="card-sub">Commission</div>
-    </div>
+    <div class="panel-card admin1"   onclick="openPanel('admin1')"><div class="icon">👑</div><div class="card-title">Admin 1</div><div class="card-sub">Manage & Approve</div></div>
+    <div class="panel-card employee" onclick="openPanel('employee')"><div class="icon">⚡</div><div class="card-title">Employee</div><div class="card-sub">Complete Jobs</div></div>
+    <div class="panel-card admin2"   onclick="openPanel('admin2')"><div class="icon">💜</div><div class="card-title">Admin 2</div><div class="card-sub">Commission</div></div>
   </div>
 </div>
-
+ 
 <!-- ADMIN 1 LOGIN -->
 <div id="screen-admin1-login" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="goHome()">←</button>
-    <span class="panel-name" style="color:var(--green)">👑 Admin 1</span>
-  </div>
-  <div class="login-wrap">
-    <div class="login-box">
-      <div class="lock-icon">🔐</div>
-      <h2>Enter Password</h2>
-      <input type="password" id="admin1-pw" placeholder="••••" onkeydown="if(event.key==='Enter') checkAdmin1Login()">
-      <button class="btn btn-green btn-full" onclick="checkAdmin1Login()">🚀 Login</button>
-    </div>
-  </div>
+  <div class="topbar"><button class="back-btn" onclick="goHome()">←</button><span class="panel-name" style="color:var(--green)">👑 Admin 1</span></div>
+  <div class="login-wrap"><div class="login-box">
+    <div class="lock-icon">🔐</div><h2>Enter Password</h2>
+    <input type="password" id="admin1-pw" placeholder="••••" onkeydown="if(event.key==='Enter')checkAdmin1Login()">
+    <button class="btn btn-green btn-full" onclick="checkAdmin1Login()">🚀 Login</button>
+  </div></div>
 </div>
-
+ 
 <!-- ADMIN 1 MAIN -->
 <div id="screen-admin1" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="logoutAdmin1()">←</button>
-    <span class="panel-name" style="color:var(--green)">👑 Admin 1</span>
-    <span class="badge" id="a1-period-badge">— Period —</span>
-  </div>
+  <div class="topbar"><button class="back-btn" onclick="logoutAdmin1()">←</button><span class="panel-name" style="color:var(--green)">👑 Admin 1</span><span class="badge" id="a1-period-badge">— Period —</span></div>
   <div class="content">
-    <!-- Period Setup -->
     <div class="card" id="period-setup-card">
       <div class="card-header"><h3>📅 Period Setup</h3></div>
-      <div id="period-display" style="display:none">
-        <div style="font-size:18px;font-weight:900;color:var(--green);margin-bottom:8px" id="period-text"></div>
-        <button class="btn btn-gray btn-sm" onclick="changePeriod()">Change Period</button>
-      </div>
+      <div id="period-display" style="display:none"><div style="font-size:18px;font-weight:900;color:var(--green);margin-bottom:8px" id="period-text"></div><button class="btn btn-gray btn-sm" onclick="changePeriod()">Change Period</button></div>
       <div id="period-form">
-        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">Select Month &amp; Year</label>
+        <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">Select Month & Year</label>
         <input type="month" id="period-input" style="padding:10px 14px;border:2.5px solid var(--border);border-radius:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;outline:none;width:100%;margin-bottom:12px">
         <button class="btn btn-green" onclick="setPeriod()">✅ Set Period</button>
       </div>
     </div>
-
-    <!-- Bonus Balance -->
     <div class="card" id="bonus-setup-card" style="display:none">
       <div class="card-header"><h3>💰 Bonus Balance</h3></div>
-      <div id="bonus-display" style="display:none">
-        <div style="font-size:26px;font-weight:900;color:var(--green);margin-bottom:8px" id="bonus-text"></div>
-        <button class="btn btn-gray btn-sm" onclick="changeBonus()">Edit Bonus</button>
-      </div>
+      <div id="bonus-display" style="display:none"><div style="font-size:26px;font-weight:900;color:var(--green);margin-bottom:8px" id="bonus-text"></div><button class="btn btn-gray btn-sm" onclick="changeBonus()">Edit Bonus</button></div>
       <div id="bonus-form">
         <label style="font-weight:700;font-size:14px;display:block;margin-bottom:6px">Bonus Amount (Rp)</label>
         <input type="number" id="bonus-input" placeholder="e.g. 500000" style="padding:10px 14px;border:2.5px solid var(--border);border-radius:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;outline:none;width:100%;margin-bottom:12px">
         <button class="btn btn-green" onclick="setBonus()">✅ Set Bonus</button>
       </div>
     </div>
-
-    <!-- Jobs -->
     <div id="jobs-section" style="display:none">
       <div class="sep"></div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -535,63 +242,42 @@
         <button class="btn btn-green btn-sm" onclick="openAddJobModal()">+ Add Job</button>
       </div>
       <div id="a1-jobs-list"></div>
-
       <div class="sep"></div>
       <div class="section-title">📬 Pending Approvals</div>
       <div id="a1-pending-list"></div>
-
       <div class="sep"></div>
       <div class="section-title">📊 Summary</div>
       <div class="stat-strip" id="a1-summary"></div>
     </div>
   </div>
 </div>
-
+ 
 <!-- EMPLOYEE PANEL -->
 <div id="screen-employee" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="goHome()">←</button>
-    <span class="panel-name" style="color:var(--blue)">⚡ Employee</span>
-    <span class="badge" id="emp-period-badge">— Period —</span>
-  </div>
+  <div class="topbar"><button class="back-btn" onclick="goHome()">←</button><span class="panel-name" style="color:var(--blue)">⚡ Employee</span><span class="badge" id="emp-period-badge">— Period —</span></div>
   <div class="content">
-    <div id="emp-no-period" style="display:none">
-      <div class="empty-state">
-        <div class="e-icon">⏳</div>
-        <p>No active period set by Admin 1 yet.</p>
-      </div>
-    </div>
+    <div id="emp-no-period" style="display:none"><div class="empty-state"><div class="e-icon">⏳</div><p>No active period set by Admin 1 yet.</p></div></div>
     <div id="emp-main" style="display:none">
-      <div class="stat-strip" id="emp-stats"></div>
+      <div class="emp-summary-card" id="emp-summary-card"></div>
       <div class="section-title">🎯 Available Jobs</div>
       <div id="emp-jobs-list"></div>
     </div>
   </div>
 </div>
-
+ 
 <!-- ADMIN 2 LOGIN -->
 <div id="screen-admin2-login" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="goHome()">←</button>
-    <span class="panel-name" style="color:var(--purple)">💜 Admin 2</span>
-  </div>
-  <div class="login-wrap">
-    <div class="login-box">
-      <div class="lock-icon">🔐</div>
-      <h2>Enter Password</h2>
-      <input type="password" id="admin2-pw" placeholder="••••" onkeydown="if(event.key==='Enter') checkAdmin2Login()">
-      <button class="btn btn-purple btn-full" onclick="checkAdmin2Login()">🚀 Login</button>
-    </div>
-  </div>
+  <div class="topbar"><button class="back-btn" onclick="goHome()">←</button><span class="panel-name" style="color:var(--purple)">💜 Admin 2</span></div>
+  <div class="login-wrap"><div class="login-box">
+    <div class="lock-icon">🔐</div><h2>Enter Password</h2>
+    <input type="password" id="admin2-pw" placeholder="••••" onkeydown="if(event.key==='Enter')checkAdmin2Login()">
+    <button class="btn btn-purple btn-full" onclick="checkAdmin2Login()">🚀 Login</button>
+  </div></div>
 </div>
-
+ 
 <!-- ADMIN 2 MAIN -->
 <div id="screen-admin2" class="screen">
-  <div class="topbar">
-    <button class="back-btn" onclick="logoutAdmin2()">←</button>
-    <span class="panel-name" style="color:var(--purple)">💜 Admin 2</span>
-    <span class="badge" style="background:#f0e0ff;color:#7b2fbe" id="a2-period-badge">— Period —</span>
-  </div>
+  <div class="topbar"><button class="back-btn" onclick="logoutAdmin2()">←</button><span class="panel-name" style="color:var(--purple)">💜 Admin 2</span><span class="badge" style="background:#f0e0ff;color:#7b2fbe" id="a2-period-badge">— Period —</span></div>
   <div class="content">
     <div class="card">
       <div class="card-header"><h3>🏦 Commission Balance</h3></div>
@@ -600,209 +286,93 @@
       <button class="btn btn-purple btn-full" onclick="openPaymentModal()">💳 Record Payment Received</button>
     </div>
     <div class="sep"></div>
-    <div class="section-title">📜 Payment History</div>
-    <div id="a2-payment-history"></div>
-    <div class="sep"></div>
     <div class="section-title">📋 Penalized Jobs</div>
     <div id="a2-penalty-jobs"></div>
   </div>
 </div>
-
-<!-- ===== MODALS ===== -->
-
-<!-- Add Job Modal -->
+ 
+<!-- MODALS -->
 <div class="modal-overlay" id="modal-add-job">
   <div class="modal">
     <h2>🎯 Add New Job</h2>
-    <label>Job Title</label>
-    <input type="text" id="job-title-input" placeholder="e.g. Monthly Report">
-    <label>Deadline</label>
-    <input type="date" id="job-deadline-input">
-    <label>Extra Bonus (Rp)</label>
-    <input type="number" id="job-bonus-input" placeholder="e.g. 100000">
-    <label>Penalty if Missed (Rp)</label>
-    <input type="number" id="job-penalty-input" placeholder="e.g. 50000">
+    <label>Job Title</label><input type="text" id="job-title-input" placeholder="e.g. Monthly Report">
+    <label>Deadline</label><input type="date" id="job-deadline-input">
+    <label>Extra Bonus (Rp)</label><input type="number" id="job-bonus-input" placeholder="e.g. 100000">
+    <label>Penalty if Missed (Rp)</label><input type="number" id="job-penalty-input" placeholder="e.g. 50000">
     <div class="modal-btns">
       <button class="btn btn-gray btn-full" onclick="closeModal('modal-add-job')">Cancel</button>
-      <button class="btn btn-green btn-full" onclick="addJob()">✅ Add Job</button>
+      <button class="btn btn-green btn-full" id="btn-add-job" onclick="addJob()">✅ Add Job</button>
     </div>
   </div>
 </div>
-
-<!-- Apply Done Modal -->
+ 
 <div class="modal-overlay" id="modal-apply-done">
   <div class="modal">
     <h2>✅ Mark as Done</h2>
     <p style="font-weight:700;font-size:14px;color:var(--text-light);margin-bottom:16px">Enter your name to submit a completion request to Admin 1.</p>
-    <label>Your Name</label>
-    <input type="text" id="apply-name-input" placeholder="Your name">
+    <label>Your Name</label><input type="text" id="apply-name-input" placeholder="Your name">
     <div class="modal-btns">
       <button class="btn btn-gray btn-full" onclick="closeModal('modal-apply-done')">Cancel</button>
-      <button class="btn btn-blue btn-full" onclick="submitDone()">📨 Submit</button>
+      <button class="btn btn-blue btn-full" id="btn-submit-done" onclick="submitDone()">📨 Submit</button>
     </div>
   </div>
 </div>
-
-<!-- Payment Modal -->
+ 
 <div class="modal-overlay" id="modal-payment">
   <div class="modal">
     <h2>💳 Record Payment</h2>
     <p style="font-weight:700;font-size:14px;color:var(--text-light);margin-bottom:16px">Enter how much Admin 1 paid you from the commission.</p>
-    <label>Amount Received (Rp)</label>
-    <input type="number" id="payment-input" placeholder="e.g. 100000">
+    <label>Amount Received (Rp)</label><input type="number" id="payment-input" placeholder="e.g. 100000">
     <div class="modal-btns">
       <button class="btn btn-gray btn-full" onclick="closeModal('modal-payment')">Cancel</button>
-      <button class="btn btn-purple btn-full" onclick="recordPayment()">✅ Record</button>
+      <button class="btn btn-purple btn-full" id="btn-record-payment" onclick="recordPayment()">✅ Record</button>
     </div>
   </div>
 </div>
-
+ 
 <script>
-// ============================================================
-//  SUPABASE CLIENT
-// ============================================================
+// ── Supabase ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://cdimuzzydtzteebitnca.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_KBAx-97-WWBBhY7sh0bYfw_cVhCnfnW';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-// ============================================================
-//  IN-MEMORY STATE  (hydrated from Supabase on each panel open)
-// ============================================================
+ 
+// ── State ────────────────────────────────────────────────────
 let state = {
-  period: null,        // { label, value }
-  bonusBalance: null,
-  jobs: [],            // each job has .applications[]
+  config:   { period_label: null, period_value: null, bonus_balance: null },
+  jobs:     [],
   payments: []
 };
-
-// ============================================================
-//  SPINNER HELPERS
-// ============================================================
-function showSpinner() { document.getElementById('spinner').classList.add('active'); }
-function hideSpinner() { document.getElementById('spinner').classList.remove('active'); }
-
-// ============================================================
-//  LOAD STATE FROM SUPABASE
-// ============================================================
-async function loadState() {
-  showSpinner();
-  try {
-    // 1. Settings
-    const { data: settingsRows } = await sb
-      .from('hedigum_settings')
-      .select('*')
-      .eq('id', 'singleton')
-      .limit(1);
-
-    const settings = settingsRows && settingsRows[0];
-    if (settings) {
-      state.period = (settings.period_value && settings.period_label)
-        ? { label: settings.period_label, value: settings.period_value }
-        : null;
-      state.bonusBalance = settings.bonus_balance ?? null;
-    }
-
-    // 2. Jobs
-    const { data: jobs } = await sb
-      .from('hedigum_jobs')
-      .select('*')
-      .order('created_at', { ascending: true });
-
-    // 3. Applications
-    const { data: apps } = await sb
-      .from('hedigum_applications')
-      .select('*')
-      .order('created_at', { ascending: true });
-
-    // 4. Payments
-    const { data: payments } = await sb
-      .from('hedigum_payments')
-      .select('*')
-      .order('created_at', { ascending: true });
-
-    // Assemble
-    state.jobs = (jobs || []).map(j => ({
-      id: j.id,
-      title: j.title,
-      deadline: j.deadline,
-      bonus: j.bonus,
-      penalty: j.penalty,
-      penalized: j.penalized,
-      penaltyApplied: j.penalty_applied,
-      applications: (apps || [])
-        .filter(a => a.job_id === j.id)
-        .map(a => ({
-          id: a.id,
-          name: a.name,
-          status: a.status,
-          submittedAt: a.submitted_at
-        }))
-    }));
-
-    state.payments = (payments || []).map(p => ({
-      id: p.id,
-      amount: p.amount,
-      date: p.pay_date
-    }));
-
-  } catch (err) {
-    toast('⚠️ DB error: ' + err.message);
-  } finally {
-    hideSpinner();
-  }
+ 
+// ── Loader ───────────────────────────────────────────────────
+function showLoader(msg = 'Loading…') {
+  document.getElementById('loader-msg').textContent = msg;
+  document.getElementById('loader').classList.add('active');
 }
-
-// ============================================================
-//  SAVE HELPERS
-// ============================================================
-async function saveSettings() {
-  await sb.from('hedigum_settings').upsert({
-    id: 'singleton',
-    period_label: state.period ? state.period.label : null,
-    period_value: state.period ? state.period.value : null,
-    bonus_balance: state.bonusBalance
-  }, { onConflict: 'id' });
+function hideLoader() { document.getElementById('loader').classList.remove('active'); }
+ 
+// ── Toast ────────────────────────────────────────────────────
+function toast(msg, ms = 2400) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), ms);
 }
-
-async function saveJob(job) {
-  await sb.from('hedigum_jobs').upsert({
-    id: job.id,
-    title: job.title,
-    deadline: job.deadline,
-    bonus: job.bonus,
-    penalty: job.penalty,
-    penalized: job.penalized,
-    penalty_applied: job.penaltyApplied
-  }, { onConflict: 'id' });
-}
-
-async function saveApplication(app, jobId) {
-  await sb.from('hedigum_applications').upsert({
-    id: app.id,
-    job_id: jobId,
-    name: app.name,
-    status: app.status,
-    submitted_at: app.submittedAt
-  }, { onConflict: 'id' });
-}
-
-// ============================================================
-//  NAVIGATION
-// ============================================================
+ 
+// ── Modals ───────────────────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+ 
+// ── Navigation ───────────────────────────────────────────────
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('landing').style.display = 'none';
-  const el = document.getElementById(id);
-  if (el) el.classList.add('active');
+  document.getElementById(id).classList.add('active');
 }
-
 function goHome() {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('landing').style.display = 'flex';
 }
-
 async function openPanel(panel) {
-  await loadState();
   if (panel === 'admin1') {
     showScreen('screen-admin1-login');
     document.getElementById('admin1-pw').value = '';
@@ -811,509 +381,410 @@ async function openPanel(panel) {
     document.getElementById('admin2-pw').value = '';
   } else {
     showScreen('screen-employee');
+    await loadAll();
     renderEmployee();
   }
 }
-
-// ============================================================
-//  TOAST
-// ============================================================
-function toast(msg, duration = 2200) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
+ 
+// ── Load all from Supabase ───────────────────────────────────
+async function loadAll() {
+  showLoader('Fetching data…');
+  try {
+    const [cfgRes, jobsRes, appsRes, payRes] = await Promise.all([
+      sb.from('config').select('*').eq('id', 1).single(),
+      sb.from('jobs').select('*').order('created_at', { ascending: true }),
+      sb.from('applications').select('*').order('submitted_at', { ascending: true }),
+      sb.from('payments').select('*').order('recorded_at', { ascending: true })
+    ]);
+ 
+    if (cfgRes.error && cfgRes.error.code !== 'PGRST116') throw cfgRes.error;
+    if (jobsRes.error)  throw jobsRes.error;
+    if (appsRes.error)  throw appsRes.error;
+    if (payRes.error)   throw payRes.error;
+ 
+    state.config   = cfgRes.data  || { period_label: null, period_value: null, bonus_balance: null };
+    state.payments = payRes.data  || [];
+ 
+    const appsMap = {};
+    (appsRes.data || []).forEach(a => {
+      if (!appsMap[a.job_id]) appsMap[a.job_id] = [];
+      appsMap[a.job_id].push(a);
+    });
+    state.jobs = (jobsRes.data || []).map(j => ({ ...j, applications: appsMap[j.id] || [] }));
+  } catch (err) {
+    toast('❌ DB error: ' + err.message);
+    console.error(err);
+  } finally {
+    hideLoader();
+  }
 }
-
-// ============================================================
-//  MODALS
-// ============================================================
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-
-// ============================================================
-//  ADMIN 1 LOGIN
-// ============================================================
+ 
+// ── Overdue check ────────────────────────────────────────────
+async function checkOverduePenalties() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  for (const job of state.jobs) {
+    if (job.penalty_applied) continue;
+    const dl = new Date(job.deadline); dl.setHours(0,0,0,0);
+    if (dl < today) {
+      const hasApproved = job.applications.some(a => a.status === 'approved');
+      job.penalty_applied = true;
+      if (!hasApproved) job.penalized = true;
+      await sb.from('jobs').update({ penalty_applied: true, penalized: job.penalized }).eq('id', job.id);
+    }
+  }
+}
+ 
+function isOverdue(job) {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const dl = new Date(job.deadline); dl.setHours(0,0,0,0);
+  return dl < today;
+}
+ 
+// ══════════════════════════════════════════════════════════════
+//  ADMIN 1
+// ══════════════════════════════════════════════════════════════
 function checkAdmin1Login() {
-  const pw = document.getElementById('admin1-pw').value;
-  if (pw === 'Hedi') {
+  if (document.getElementById('admin1-pw').value === 'Hedi') {
     showScreen('screen-admin1');
-    renderAdmin1();
+    loadAll().then(() => { checkOverduePenalties(); renderAdmin1(); });
   } else {
     toast('❌ Wrong password!');
     document.getElementById('admin1-pw').value = '';
   }
 }
 function logoutAdmin1() { goHome(); }
-
-// ============================================================
-//  ADMIN 1 RENDER
-// ============================================================
+ 
 function renderAdmin1() {
-  checkOverduePenalties();
-
-  if (state.period) {
-    document.getElementById('period-form').style.display = 'none';
+  const cfg = state.config;
+  if (cfg.period_label) {
+    document.getElementById('period-form').style.display    = 'none';
     document.getElementById('period-display').style.display = 'block';
-    document.getElementById('period-text').textContent = '📅 ' + state.period.label;
-    document.getElementById('a1-period-badge').textContent = state.period.label;
+    document.getElementById('period-text').textContent      = '📅 ' + cfg.period_label;
+    document.getElementById('a1-period-badge').textContent  = cfg.period_label;
   } else {
-    document.getElementById('period-form').style.display = 'block';
+    document.getElementById('period-form').style.display    = 'block';
     document.getElementById('period-display').style.display = 'none';
-    document.getElementById('a1-period-badge').textContent = '— Period —';
+    document.getElementById('a1-period-badge').textContent  = '— Period —';
   }
-
-  if (state.period) {
+  if (cfg.period_label) {
     document.getElementById('bonus-setup-card').style.display = 'block';
-    if (state.bonusBalance !== null) {
-      document.getElementById('bonus-form').style.display = 'none';
+    if (cfg.bonus_balance !== null) {
+      document.getElementById('bonus-form').style.display    = 'none';
       document.getElementById('bonus-display').style.display = 'block';
-      document.getElementById('bonus-text').textContent = formatRp(state.bonusBalance);
+      document.getElementById('bonus-text').textContent      = formatRp(cfg.bonus_balance);
     } else {
-      document.getElementById('bonus-form').style.display = 'block';
+      document.getElementById('bonus-form').style.display    = 'block';
       document.getElementById('bonus-display').style.display = 'none';
     }
   } else {
     document.getElementById('bonus-setup-card').style.display = 'none';
   }
-
-  if (state.period && state.bonusBalance !== null) {
+  if (cfg.period_label && cfg.bonus_balance !== null) {
     document.getElementById('jobs-section').style.display = 'block';
-    renderA1Jobs();
-    renderA1Pending();
-    renderA1Summary();
+    renderA1Jobs(); renderA1Pending(); renderA1Summary();
   } else {
     document.getElementById('jobs-section').style.display = 'none';
   }
 }
-
+ 
 function renderA1Jobs() {
   const el = document.getElementById('a1-jobs-list');
-  if (!state.jobs.length) {
-    el.innerHTML = '<div class="empty-state"><div class="e-icon">📋</div><p>No jobs yet. Add one!</p></div>';
-    return;
-  }
+  if (!state.jobs.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📋</div><p>No jobs yet. Add one!</p></div>'; return; }
   el.innerHTML = state.jobs.map(job => {
-    const overdue = isOverdue(job);
-    const statusTag = overdue
-      ? '<span class="job-tag tag-status-overdue">⏰ Overdue</span>'
-      : '<span class="job-tag tag-status-open">🟢 Open</span>';
-    return `
-      <div class="job-card ${overdue ? 'overdue' : 'open'}">
-        <div class="job-title">${escHtml(job.title)}</div>
-        <div class="job-meta">
-          <span class="job-tag tag-deadline">📅 ${formatDate(job.deadline)}</span>
-          <span class="job-tag tag-bonus">🎁 +${formatRp(job.bonus)}</span>
-          <span class="job-tag tag-penalty">⚠️ -${formatRp(job.penalty)}</span>
-          ${statusTag}
-        </div>
-        <div class="job-actions">
-          <button class="btn btn-red btn-sm" onclick="deleteJob('${job.id}')">🗑️ Delete</button>
-        </div>
-      </div>`;
+    const ov = isOverdue(job);
+    const stag = ov ? '<span class="job-tag tag-status-overdue">⏰ Overdue</span>' : '<span class="job-tag tag-status-open">🟢 Open</span>';
+    return `<div class="job-card ${ov?'overdue':'open'}">
+      <div class="job-title">${escHtml(job.title)}</div>
+      <div class="job-meta">
+        <span class="job-tag tag-deadline">📅 ${formatDate(job.deadline)}</span>
+        <span class="job-tag tag-bonus">🎁 +${formatRp(job.bonus)}</span>
+        <span class="job-tag tag-penalty">⚠️ -${formatRp(job.penalty)}</span>
+        ${stag}
+      </div>
+      <div class="job-actions"><button class="btn btn-red btn-sm" onclick="deleteJob('${job.id}')">🗑️ Delete</button></div>
+    </div>`;
   }).join('');
 }
-
+ 
 function renderA1Pending() {
   const el = document.getElementById('a1-pending-list');
   const pending = [];
-  state.jobs.forEach(job => {
-    (job.applications || []).forEach(app => {
-      if (app.status === 'pending') pending.push({ job, app });
-    });
-  });
-
-  if (!pending.length) {
-    el.innerHTML = '<div class="empty-state"><div class="e-icon">📭</div><p>No pending approvals.</p></div>';
-    return;
-  }
-  el.innerHTML = pending.map(({ job, app }) => `
+  state.jobs.forEach(job => job.applications.forEach(app => { if (app.status === 'pending') pending.push({job,app}); }));
+  if (!pending.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📭</div><p>No pending approvals.</p></div>'; return; }
+  el.innerHTML = pending.map(({job,app}) => `
     <div class="app-item">
-      <div>
-        <div class="app-name">${escHtml(app.name)}</div>
-        <div class="app-sub">Job: ${escHtml(job.title)} · Submitted: ${app.submittedAt}</div>
-      </div>
+      <div><div class="app-name">${escHtml(app.name)}</div><div class="app-sub">Job: ${escHtml(job.title)} · ${formatDatetime(app.submitted_at)}</div></div>
       <div class="app-item-actions">
         <button class="btn btn-green btn-sm" onclick="approveApp('${job.id}','${app.id}')">✅ Approve</button>
-        <button class="btn btn-red btn-sm" onclick="rejectApp('${job.id}','${app.id}')">❌ Reject</button>
+        <button class="btn btn-red btn-sm"   onclick="rejectApp('${job.id}','${app.id}')">❌ Reject</button>
       </div>
     </div>`).join('');
 }
-
+ 
 function renderA1Summary() {
-  const totalBonus = state.bonusBalance || 0;
-  let totalExtraBonus = 0, totalPenalty = 0, approvedCount = 0;
+  const base = state.config.bonus_balance || 0;
+  let extra = 0, penalty = 0, approved = 0;
   state.jobs.forEach(job => {
-    (job.applications || []).forEach(app => {
-      if (app.status === 'approved') { totalExtraBonus += job.bonus; approvedCount++; }
-    });
-    if (job.penalized) totalPenalty += job.penalty;
+    job.applications.forEach(a => { if (a.status==='approved') { extra += job.bonus; approved++; } });
+    if (job.penalized) penalty += job.penalty;
   });
   document.getElementById('a1-summary').innerHTML = `
-    <div class="stat-box green"><div class="stat-label">Base Bonus</div><div class="stat-val">${formatRpShort(totalBonus)}</div></div>
-    <div class="stat-box blue"><div class="stat-label">Extra Bonuses</div><div class="stat-val">${formatRpShort(totalExtraBonus)}</div></div>
-    <div class="stat-box red"><div class="stat-label">Penalties</div><div class="stat-val">${formatRpShort(totalPenalty)}</div></div>
-    <div class="stat-box green"><div class="stat-label">Approved</div><div class="stat-val">${approvedCount}</div></div>
-  `;
+    <div class="stat-box green"><div class="stat-label">Base Bonus</div><div class="stat-val">${formatRpShort(base)}</div></div>
+    <div class="stat-box blue"><div class="stat-label">Extra Bonuses</div><div class="stat-val">${formatRpShort(extra)}</div></div>
+    <div class="stat-box red"><div class="stat-label">Penalties</div><div class="stat-val">${formatRpShort(penalty)}</div></div>
+    <div class="stat-box green"><div class="stat-label">Approved</div><div class="stat-val">${approved}</div></div>`;
 }
-
-// ============================================================
-//  PERIOD
-// ============================================================
+ 
 async function setPeriod() {
   const val = document.getElementById('period-input').value;
   if (!val) { toast('⚠️ Please select a month!'); return; }
-  const [year, month] = val.split('-');
-  const label = new Date(year, month - 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  state.period = { label, value: val };
-  showSpinner();
-  await saveSettings();
-  hideSpinner();
-  toast('✅ Period set: ' + label);
-  renderAdmin1();
+  const [yr, mo] = val.split('-');
+  const label = new Date(yr, mo-1).toLocaleDateString('en-US', {month:'long',year:'numeric'});
+  showLoader('Saving period…');
+  const {error} = await sb.from('config').upsert({id:1, period_label:label, period_value:val, updated_at:new Date().toISOString()});
+  hideLoader();
+  if (error) { toast('❌ ' + error.message); return; }
+  state.config.period_label = label; state.config.period_value = val;
+  toast('✅ Period set: ' + label); renderAdmin1();
 }
-
 function changePeriod() {
-  document.getElementById('period-form').style.display = 'block';
-  document.getElementById('period-display').style.display = 'none';
+  document.getElementById('period-form').style.display='block';
+  document.getElementById('period-display').style.display='none';
 }
-
-// ============================================================
-//  BONUS
-// ============================================================
+ 
 async function setBonus() {
   const val = parseInt(document.getElementById('bonus-input').value);
   if (!val || val <= 0) { toast('⚠️ Enter a valid bonus amount!'); return; }
-  state.bonusBalance = val;
-  showSpinner();
-  await saveSettings();
-  hideSpinner();
-  toast('✅ Bonus set: ' + formatRp(val));
-  renderAdmin1();
+  showLoader('Saving bonus…');
+  const {error} = await sb.from('config').upsert({id:1, bonus_balance:val, updated_at:new Date().toISOString()});
+  hideLoader();
+  if (error) { toast('❌ ' + error.message); return; }
+  state.config.bonus_balance = val;
+  toast('✅ Bonus set: ' + formatRp(val)); renderAdmin1();
 }
-
 function changeBonus() {
-  document.getElementById('bonus-form').style.display = 'block';
-  document.getElementById('bonus-display').style.display = 'none';
+  document.getElementById('bonus-form').style.display='block';
+  document.getElementById('bonus-display').style.display='none';
 }
-
-// ============================================================
-//  JOBS
-// ============================================================
+ 
 let _applyJobId = null;
-
 function openAddJobModal() {
-  document.getElementById('job-title-input').value = '';
-  document.getElementById('job-deadline-input').value = '';
-  document.getElementById('job-bonus-input').value = '';
-  document.getElementById('job-penalty-input').value = '';
+  ['job-title-input','job-deadline-input','job-bonus-input','job-penalty-input'].forEach(id => document.getElementById(id).value='');
   openModal('modal-add-job');
 }
-
+ 
 async function addJob() {
-  const title = document.getElementById('job-title-input').value.trim();
+  const title   = document.getElementById('job-title-input').value.trim();
   const deadline = document.getElementById('job-deadline-input').value;
-  const bonus = parseInt(document.getElementById('job-bonus-input').value);
+  const bonus   = parseInt(document.getElementById('job-bonus-input').value);
   const penalty = parseInt(document.getElementById('job-penalty-input').value);
-  if (!title) { toast('⚠️ Enter job title!'); return; }
-  if (!deadline) { toast('⚠️ Set a deadline!'); return; }
-  if (!bonus || bonus <= 0) { toast('⚠️ Enter extra bonus!'); return; }
+  if (!title)          { toast('⚠️ Enter job title!'); return; }
+  if (!deadline)       { toast('⚠️ Set a deadline!'); return; }
+  if (!bonus  || bonus  <= 0) { toast('⚠️ Enter extra bonus!'); return; }
   if (!penalty || penalty <= 0) { toast('⚠️ Enter penalty amount!'); return; }
-
-  const job = {
-    id: Date.now().toString(),
-    title, deadline, bonus, penalty,
-    penalized: false, penaltyApplied: false,
-    applications: []
-  };
-
-  showSpinner();
-  await saveJob(job);
-  hideSpinner();
-
-  state.jobs.push(job);
-  closeModal('modal-add-job');
-  toast('🎯 Job added: ' + title);
-  renderAdmin1();
+  document.getElementById('btn-add-job').disabled = true;
+  showLoader('Adding job…');
+  const {data, error} = await sb.from('jobs').insert({title, deadline, bonus, penalty, penalized:false, penalty_applied:false}).select().single();
+  hideLoader(); document.getElementById('btn-add-job').disabled = false;
+  if (error) { toast('❌ ' + error.message); return; }
+  state.jobs.push({...data, applications:[]});
+  closeModal('modal-add-job'); toast('🎯 Job added: ' + title); renderAdmin1();
 }
-
+ 
 async function deleteJob(jobId) {
   if (!confirm('Delete this job?')) return;
-  showSpinner();
-  await sb.from('hedigum_jobs').delete().eq('id', jobId);
-  hideSpinner();
+  showLoader('Deleting…');
+  const {error} = await sb.from('jobs').delete().eq('id', jobId);
+  hideLoader();
+  if (error) { toast('❌ ' + error.message); return; }
   state.jobs = state.jobs.filter(j => j.id !== jobId);
-  toast('🗑️ Job deleted.');
-  renderAdmin1();
+  toast('🗑️ Job deleted.'); renderAdmin1();
 }
-
-function isOverdue(job) {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dl = new Date(job.deadline); dl.setHours(0,0,0,0);
-  return dl < today;
-}
-
-async function checkOverduePenalties() {
-  const toUpdate = [];
-  state.jobs.forEach(job => {
-    if (isOverdue(job) && !job.penaltyApplied) {
-      const hasApproved = (job.applications || []).some(a => a.status === 'approved');
-      job.penalized = !hasApproved;
-      job.penaltyApplied = true;
-      toUpdate.push(job);
-    }
-  });
-  for (const job of toUpdate) {
-    await saveJob(job);
-  }
-}
-
-// ============================================================
-//  APPLICATIONS
-// ============================================================
+ 
 async function approveApp(jobId, appId) {
+  showLoader('Approving…');
+  const {error} = await sb.from('applications').update({status:'approved'}).eq('id', appId);
+  if (!error) await sb.from('jobs').update({penalized:false}).eq('id', jobId);
+  hideLoader();
+  if (error) { toast('❌ ' + error.message); return; }
   const job = state.jobs.find(j => j.id === jobId);
-  if (!job) return;
-  const app = job.applications.find(a => a.id === appId);
-  if (!app) return;
-  app.status = 'approved';
+  job.applications.find(a => a.id === appId).status = 'approved';
   job.penalized = false;
-  showSpinner();
-  await saveApplication(app, jobId);
-  await saveJob(job);
-  hideSpinner();
-  toast('✅ Approved! Bonus granted to ' + app.name);
-  renderAdmin1();
+  toast('✅ Approved!'); renderAdmin1();
 }
-
+ 
 async function rejectApp(jobId, appId) {
-  const job = state.jobs.find(j => j.id === jobId);
-  if (!job) return;
-  const app = job.applications.find(a => a.id === appId);
-  if (!app) return;
-  app.status = 'rejected';
-  showSpinner();
-  await saveApplication(app, jobId);
-  hideSpinner();
-  toast('❌ Rejected.');
-  renderAdmin1();
+  showLoader('Rejecting…');
+  const {error} = await sb.from('applications').update({status:'rejected'}).eq('id', appId);
+  hideLoader();
+  if (error) { toast('❌ ' + error.message); return; }
+  state.jobs.find(j => j.id === jobId).applications.find(a => a.id === appId).status = 'rejected';
+  toast('❌ Rejected.'); renderAdmin1();
 }
-
-// ============================================================
-//  EMPLOYEE PANEL
-// ============================================================
+ 
+// ══════════════════════════════════════════════════════════════
+//  EMPLOYEE
+// ══════════════════════════════════════════════════════════════
 function renderEmployee() {
-  checkOverduePenalties();
-
-  if (!state.period || state.bonusBalance === null) {
+  const cfg = state.config;
+  if (!cfg.period_label || cfg.bonus_balance === null) {
     document.getElementById('emp-no-period').style.display = 'block';
-    document.getElementById('emp-main').style.display = 'none';
+    document.getElementById('emp-main').style.display      = 'none';
     return;
   }
   document.getElementById('emp-no-period').style.display = 'none';
-  document.getElementById('emp-main').style.display = 'block';
-  document.getElementById('emp-period-badge').textContent = state.period ? state.period.label : '—';
-
-  let totalApproved = 0, totalPending = 0;
-  state.jobs.forEach(job => {
-    (job.applications || []).forEach(app => {
-      if (app.status === 'approved') totalApproved++;
-      if (app.status === 'pending') totalPending++;
-    });
-  });
-  document.getElementById('emp-stats').innerHTML = `
-    <div class="stat-box green"><div class="stat-label">Base Bonus</div><div class="stat-val">${formatRpShort(state.bonusBalance)}</div></div>
-    <div class="stat-box blue"><div class="stat-label">Pending</div><div class="stat-val">${totalPending}</div></div>
-    <div class="stat-box green"><div class="stat-label">Approved</div><div class="stat-val">${totalApproved}</div></div>
-  `;
-  renderEmpJobs();
+  document.getElementById('emp-main').style.display      = 'block';
+  document.getElementById('emp-period-badge').textContent = cfg.period_label;
+  renderEmpSummary(); renderEmpJobs();
 }
-
+ 
+function renderEmpSummary() {
+  const base = state.config.bonus_balance || 0;
+  let extra = 0, penalties = 0, pending = 0;
+  state.jobs.forEach(job => {
+    job.applications.forEach(a => {
+      if (a.status==='approved') extra += job.bonus;
+      if (a.status==='pending')  pending++;
+    });
+    if (job.penalized) penalties += job.penalty;
+  });
+  const net = base + extra - penalties;
+  document.getElementById('emp-summary-card').innerHTML = `
+    <div class="summary-title">📊 My Summary · ${escHtml(state.config.period_label)}</div>
+    <div class="emp-summary-grid">
+      <div class="emp-summary-item"><div class="esi-label">Base Bonus</div><div class="esi-val">${formatRpShort(base)}</div></div>
+      <div class="emp-summary-item highlight"><div class="esi-label">Extra Earned</div><div class="esi-val">+${formatRpShort(extra)}</div></div>
+      <div class="emp-summary-item" style="background:rgba(255,75,75,0.25)"><div class="esi-label">Penalties</div><div class="esi-val" style="color:#ffcccc">-${formatRpShort(penalties)}</div></div>
+      <div class="emp-summary-item"><div class="esi-label">Pending</div><div class="esi-val">${pending} job${pending!==1?'s':''}</div></div>
+      <div class="emp-summary-item full-width"><div class="esi-label">Estimated Net Bonus</div><div class="esi-val" style="font-size:26px;color:#d7ffb8">${formatRpShort(net)}</div></div>
+    </div>`;
+}
+ 
 function renderEmpJobs() {
   const el = document.getElementById('emp-jobs-list');
-  if (!state.jobs.length) {
-    el.innerHTML = '<div class="empty-state"><div class="e-icon">📋</div><p>No jobs available yet.</p></div>';
-    return;
-  }
-
+  if (!state.jobs.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📋</div><p>No jobs available yet.</p></div>'; return; }
   el.innerHTML = state.jobs.map(job => {
-    const overdue = isOverdue(job);
-    const apps = job.applications || [];
-    const hasApproved = apps.some(a => a.status === 'approved');
-    const hasPending = apps.some(a => a.status === 'pending');
-
-    let statusHtml = '';
-    if (hasApproved) statusHtml = '<span class="job-tag tag-status-approved">✅ Approved!</span>';
-    else if (hasPending) statusHtml = '<span class="job-tag tag-status-pending">⏳ Pending Review</span>';
-    else if (overdue) statusHtml = '<span class="job-tag tag-status-overdue">⏰ Overdue</span>';
-    else statusHtml = '<span class="job-tag tag-status-open">🟢 Open</span>';
-
+    const ov = isOverdue(job);
+    const apps = job.applications;
+    const hasApproved = apps.some(a => a.status==='approved');
+    const hasPending  = apps.some(a => a.status==='pending');
+    let statusHtml = hasApproved ? '<span class="job-tag tag-status-approved">✅ Approved!</span>'
+      : hasPending ? '<span class="job-tag tag-status-pending">⏳ Pending Review</span>'
+      : ov ? '<span class="job-tag tag-status-overdue">⏰ Overdue</span>'
+      : '<span class="job-tag tag-status-open">🟢 Open</span>';
     let actionHtml = '';
     if (!hasApproved) {
-      if (!overdue) {
-        actionHtml = `<button class="btn btn-blue btn-sm" onclick="openApplyModal('${job.id}')">✅ Mark as Done</button>`;
-      } else if (hasPending) {
-        actionHtml = `<span style="font-size:13px;font-weight:700;color:var(--text-light)">Awaiting review (overdue)</span>`;
-      } else {
-        actionHtml = `<span style="font-size:13px;font-weight:700;color:var(--red)">Deadline passed — penalty applied</span>`;
-      }
+      if (!ov) actionHtml = `<button class="btn btn-blue btn-sm" onclick="openApplyModal('${job.id}')">✅ Mark as Done</button>`;
+      else if (hasPending) actionHtml = `<span style="font-size:13px;font-weight:700;color:var(--text-light)">Awaiting review (overdue)</span>`;
+      else actionHtml = `<span style="font-size:13px;font-weight:700;color:var(--red)">Deadline passed — penalty applied</span>`;
     }
-
     const appsHtml = apps.length ? `
       <div style="margin-top:10px;border-top:1.5px solid var(--border);padding-top:10px">
         <div style="font-size:12px;font-weight:700;color:var(--text-light);margin-bottom:6px">SUBMISSIONS</div>
-        ${apps.map(a => `
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-            <span style="font-weight:700;font-size:13px">${escHtml(a.name)}</span>
-            <span class="job-tag ${a.status === 'approved' ? 'tag-status-approved' : a.status === 'rejected' ? 'tag-status-rejected' : 'tag-status-pending'}" style="font-size:11px">
-              ${a.status === 'approved' ? '✅ Approved' : a.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
-            </span>
-          </div>`).join('')}
+        ${apps.map(a => `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <span style="font-weight:700;font-size:13px">${escHtml(a.name)}</span>
+          <span class="job-tag ${a.status==='approved'?'tag-status-approved':a.status==='rejected'?'tag-status-rejected':'tag-status-pending'}" style="font-size:11px">${a.status==='approved'?'✅ Approved':a.status==='rejected'?'❌ Rejected':'⏳ Pending'}</span>
+        </div>`).join('')}
       </div>` : '';
-
-    return `
-      <div class="job-card ${overdue ? 'overdue' : 'open'}">
-        <div class="job-title">${escHtml(job.title)}</div>
-        <div class="job-meta">
-          <span class="job-tag tag-deadline">📅 ${formatDate(job.deadline)}</span>
-          <span class="job-tag tag-bonus">🎁 +${formatRp(job.bonus)}</span>
-          <span class="job-tag tag-penalty">⚠️ -${formatRp(job.penalty)}</span>
-          ${statusHtml}
-        </div>
-        <div class="job-actions">${actionHtml}</div>
-        ${appsHtml}
-      </div>`;
+    return `<div class="job-card ${ov?'overdue':'open'}">
+      <div class="job-title">${escHtml(job.title)}</div>
+      <div class="job-meta">
+        <span class="job-tag tag-deadline">📅 ${formatDate(job.deadline)}</span>
+        <span class="job-tag tag-bonus">🎁 +${formatRp(job.bonus)}</span>
+        <span class="job-tag tag-penalty">⚠️ -${formatRp(job.penalty)}</span>
+        ${statusHtml}
+      </div>
+      <div class="job-actions">${actionHtml}</div>
+      ${appsHtml}
+    </div>`;
   }).join('');
 }
-
+ 
 function openApplyModal(jobId) {
   _applyJobId = jobId;
   document.getElementById('apply-name-input').value = '';
   openModal('modal-apply-done');
 }
-
+ 
 async function submitDone() {
   const name = document.getElementById('apply-name-input').value.trim();
   if (!name) { toast('⚠️ Enter your name!'); return; }
-  const job = state.jobs.find(j => j.id === _applyJobId);
-  if (!job) return;
-  const app = {
-    id: Date.now().toString(),
-    name,
-    status: 'pending',
-    submittedAt: new Date().toLocaleDateString('en-GB')
-  };
-  showSpinner();
-  await saveApplication(app, job.id);
-  hideSpinner();
-  if (!job.applications) job.applications = [];
-  job.applications.push(app);
-  closeModal('modal-apply-done');
-  toast('📨 Submitted! Waiting for Admin 1 approval.');
-  renderEmployee();
+  document.getElementById('btn-submit-done').disabled = true;
+  showLoader('Submitting…');
+  const {data, error} = await sb.from('applications').insert({job_id:_applyJobId, name, status:'pending'}).select().single();
+  hideLoader(); document.getElementById('btn-submit-done').disabled = false;
+  if (error) { toast('❌ ' + error.message); return; }
+  state.jobs.find(j => j.id === _applyJobId).applications.push(data);
+  closeModal('modal-apply-done'); toast('📨 Submitted! Waiting for Admin 1 approval.'); renderEmployee();
 }
-
-// ============================================================
-//  ADMIN 2 LOGIN
-// ============================================================
+ 
+// ══════════════════════════════════════════════════════════════
+//  ADMIN 2
+// ══════════════════════════════════════════════════════════════
 function checkAdmin2Login() {
-  const pw = document.getElementById('admin2-pw').value;
-  if (pw === 'Gum') {
+  if (document.getElementById('admin2-pw').value === 'Gum') {
     showScreen('screen-admin2');
-    renderAdmin2();
+    loadAll().then(() => { checkOverduePenalties(); renderAdmin2(); });
   } else {
     toast('❌ Wrong password!');
     document.getElementById('admin2-pw').value = '';
   }
 }
 function logoutAdmin2() { goHome(); }
-
+ 
 function renderAdmin2() {
-  checkOverduePenalties();
-  document.getElementById('a2-period-badge').textContent = state.period ? state.period.label : '—';
-
-  let totalPenalty = 0;
-  state.jobs.forEach(job => { if (job.penalized) totalPenalty += job.penalty; });
-  const totalPaid = (state.payments || []).reduce((s, p) => s + p.amount, 0);
-  const remaining = Math.max(0, totalPenalty - totalPaid);
-  document.getElementById('a2-commission').textContent = formatRp(remaining);
-
-  const phEl = document.getElementById('a2-payment-history');
-  if (!(state.payments || []).length) {
-    phEl.innerHTML = '<div class="empty-state"><div class="e-icon">📭</div><p>No payments recorded yet.</p></div>';
-  } else {
-    phEl.innerHTML = [...state.payments].reverse().map(p => `
-      <div class="payment-history-item">
-        <div>
-          <div class="ph-amount">${formatRp(p.amount)}</div>
-          <div class="ph-date">${p.date}</div>
-        </div>
-        <span style="font-size:20px">✅</span>
-      </div>`).join('');
-  }
-
+  document.getElementById('a2-period-badge').textContent = state.config.period_label || '—';
+  const totalPenalty = state.jobs.filter(j => j.penalized).reduce((s,j) => s+j.penalty, 0);
+  const totalPaid    = state.payments.reduce((s,p) => s+p.amount, 0);
+  document.getElementById('a2-commission').textContent = formatRp(Math.max(0, totalPenalty - totalPaid));
   const pjEl = document.getElementById('a2-penalty-jobs');
-  const penalizedJobs = state.jobs.filter(j => j.penalized);
-  if (!penalizedJobs.length) {
-    pjEl.innerHTML = '<div class="empty-state"><div class="e-icon">🎉</div><p>No penalized jobs yet!</p></div>';
-  } else {
-    pjEl.innerHTML = penalizedJobs.map(j => `
-      <div class="job-card overdue">
-        <div class="job-title">${escHtml(j.title)}</div>
-        <div class="job-meta">
-          <span class="job-tag tag-deadline">📅 ${formatDate(j.deadline)}</span>
-          <span class="job-tag tag-penalty">⚠️ ${formatRp(j.penalty)}</span>
-        </div>
-      </div>`).join('');
-  }
+  const penalized = state.jobs.filter(j => j.penalized);
+  if (!penalized.length) { pjEl.innerHTML = '<div class="empty-state"><div class="e-icon">🎉</div><p>No penalized jobs yet!</p></div>'; return; }
+  pjEl.innerHTML = penalized.map(j => `
+    <div class="job-card overdue">
+      <div class="job-title">${escHtml(j.title)}</div>
+      <div class="job-meta">
+        <span class="job-tag tag-deadline">📅 ${formatDate(j.deadline)}</span>
+        <span class="job-tag tag-penalty">⚠️ ${formatRp(j.penalty)}</span>
+      </div>
+    </div>`).join('');
 }
-
-function openPaymentModal() {
-  document.getElementById('payment-input').value = '';
-  openModal('modal-payment');
-}
-
+ 
+function openPaymentModal() { document.getElementById('payment-input').value=''; openModal('modal-payment'); }
+ 
 async function recordPayment() {
   const amount = parseInt(document.getElementById('payment-input').value);
   if (!amount || amount <= 0) { toast('⚠️ Enter a valid amount!'); return; }
-  showSpinner();
-  const { data } = await sb.from('hedigum_payments').insert({
-    amount,
-    pay_date: new Date().toLocaleDateString('en-GB')
-  }).select().single();
-  hideSpinner();
-  if (data) {
-    state.payments.push({ id: data.id, amount: data.amount, date: data.pay_date });
-  }
-  closeModal('modal-payment');
-  toast('💳 Payment of ' + formatRp(amount) + ' recorded!');
-  renderAdmin2();
+  document.getElementById('btn-record-payment').disabled = true;
+  showLoader('Recording payment…');
+  const {data, error} = await sb.from('payments').insert({amount}).select().single();
+  hideLoader(); document.getElementById('btn-record-payment').disabled = false;
+  if (error) { toast('❌ ' + error.message); return; }
+  state.payments.push(data);
+  closeModal('modal-payment'); toast('💳 Payment of ' + formatRp(amount) + ' recorded!'); renderAdmin2();
 }
-
-// ============================================================
-//  HELPERS
-// ============================================================
-function formatRp(n) {
-  return 'Rp ' + Number(n).toLocaleString('id-ID');
-}
+ 
+// ── Helpers ──────────────────────────────────────────────────
+function formatRp(n)      { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
 function formatRpShort(n) {
   if (n >= 1000000) return 'Rp ' + (n/1000000).toFixed(1) + 'jt';
-  if (n >= 1000) return 'Rp ' + (n/1000).toFixed(0) + 'rb';
+  if (n >= 1000)    return 'Rp ' + (n/1000).toFixed(0)    + 'rb';
   return 'Rp ' + n;
 }
-function formatDate(dateStr) {
-  if (!dateStr) return '—';
-  return new Date(dateStr).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+function formatDate(s) {
+  if (!s) return '—';
+  return new Date(s).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'});
 }
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function formatDatetime(s) {
+  if (!s) return '—';
+  return new Date(s).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'});
 }
-
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('active');
-  });
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+ 
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
 });
 </script>
 </body>
