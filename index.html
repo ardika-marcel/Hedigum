@@ -28,7 +28,7 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
- 
+
   /* LANDING */
   #landing { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; background:linear-gradient(160deg,#23d160 0%,#1cb0f6 100%); padding:24px; }
   .logo-box { text-align:center; margin-bottom:40px; }
@@ -46,25 +46,25 @@
   .panel-card.admin1   { border-color:var(--green); }
   .panel-card.admin2   { border-color:var(--purple); }
   .panel-card.employee { border-color:var(--blue); }
- 
+
   /* SCREENS */
   .screen { display:none; min-height:100vh; }
   .screen.active { display:block; }
- 
+
   /* TOPBAR */
   .topbar { display:flex; align-items:center; padding:14px 20px; background:#fff; border-bottom:3px solid var(--border); position:sticky; top:0; z-index:100; }
   .topbar .back-btn { background:none; border:none; font-size:24px; cursor:pointer; margin-right:12px; padding:4px 8px; border-radius:10px; transition:background 0.15s; }
   .topbar .back-btn:hover { background:var(--bg); }
   .topbar .panel-name { font-family:'Fredoka One',cursive; font-size:26px; color:var(--text); }
   .topbar .badge { margin-left:auto; background:var(--green-light); color:var(--green-dark); font-weight:800; font-size:13px; border-radius:20px; padding:4px 12px; }
- 
+
   /* LOADER */
   .loader-overlay { display:none; position:fixed; inset:0; background:rgba(255,255,255,0.75); z-index:500; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
   .loader-overlay.active { display:flex; }
   .spinner { width:44px; height:44px; border:5px solid var(--border); border-top-color:var(--blue); border-radius:50%; animation:spin 0.7s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
   .loader-overlay p { font-weight:800; font-size:14px; color:var(--text-light); }
- 
+
   /* MODAL */
   .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:200; align-items:center; justify-content:center; padding:20px; }
   .modal-overlay.active { display:flex; }
@@ -75,7 +75,7 @@
   .modal input,.modal select { width:100%; padding:12px 14px; border:2.5px solid var(--border); border-radius:14px; font-family:'Nunito',sans-serif; font-size:15px; font-weight:600; outline:none; transition:border 0.15s; }
   .modal input:focus,.modal select:focus { border-color:var(--blue); }
   .modal-btns { display:flex; gap:12px; margin-top:22px; }
- 
+
   /* BUTTONS */
   .btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:12px 20px; border-radius:14px; font-family:'Nunito',sans-serif; font-weight:800; font-size:15px; border:none; cursor:pointer; box-shadow:var(--shadow); transition:transform 0.1s,box-shadow 0.1s; user-select:none; }
   .btn:active   { transform:translateY(3px); box-shadow:none; }
@@ -92,15 +92,15 @@
   .btn-gray:active { box-shadow:0 1px 0 #ccc; }
   .btn-sm   { padding:8px 14px; font-size:13px; border-radius:10px; }
   .btn-full { width:100%; }
- 
+
   /* CONTENT */
   .content { padding:20px; max-width:800px; margin:0 auto; }
- 
+
   /* CARD */
   .card { background:var(--card); border-radius:20px; padding:20px; margin-bottom:16px; border:2.5px solid var(--border); box-shadow:var(--shadow-sm); }
   .card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
   .card h3 { font-family:'Fredoka One',cursive; font-size:20px; }
- 
+
   /* STAT STRIP */
   .stat-strip { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
   .stat-box { flex:1; min-width:120px; background:var(--card); border-radius:16px; padding:16px; border:2.5px solid var(--border); box-shadow:var(--shadow-sm); text-align:center; }
@@ -110,7 +110,7 @@
   .stat-box.blue   .stat-val { color:var(--blue); }
   .stat-box.red    .stat-val { color:var(--red); }
   .stat-box.purple .stat-val { color:var(--purple); }
- 
+
   /* JOB CARD */
   .job-card { background:var(--card); border-radius:16px; padding:16px; margin-bottom:12px; border:2.5px solid var(--border); box-shadow:var(--shadow-sm); position:relative; overflow:hidden; }
   .job-card::before { content:''; position:absolute; left:0; top:0; bottom:0; width:5px; border-radius:5px 0 0 5px; }
@@ -128,20 +128,20 @@
   .tag-status-overdue  { background:#ffe0e0; color:var(--red-dark); }
   .tag-status-open     { background:#e0f0ff; color:var(--blue-dark); }
   .job-actions { display:flex; gap:8px; flex-wrap:wrap; }
- 
+
   /* APP ITEM */
   .app-item { display:flex; align-items:center; justify-content:space-between; padding:12px 14px; background:var(--bg); border-radius:12px; margin-bottom:8px; flex-wrap:wrap; gap:8px; }
   .app-item .app-name { font-weight:800; font-size:14px; }
   .app-item .app-sub  { font-size:12px; color:var(--text-light); font-weight:600; }
   .app-item-actions   { display:flex; gap:6px; }
- 
+
   /* SECTION TITLE */
   .section-title { font-family:'Fredoka One',cursive; font-size:18px; margin-bottom:12px; color:var(--text-light); display:flex; align-items:center; gap:8px; }
- 
+
   /* TOAST */
   #toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--text); color:#fff; padding:12px 24px; border-radius:30px; font-weight:700; font-size:14px; z-index:9999; transition:transform 0.3s ease; white-space:nowrap; }
   #toast.show { transform:translateX(-50%) translateY(0); }
- 
+
   /* LOGIN */
   .login-wrap { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:60vh; padding:20px; }
   .login-box { background:#fff; border-radius:24px; padding:32px; width:100%; max-width:360px; box-shadow:0 8px 0 rgba(0,0,0,0.12); border:2.5px solid var(--border); text-align:center; }
@@ -149,18 +149,23 @@
   .login-box h2 { font-family:'Fredoka One',cursive; font-size:26px; margin-bottom:20px; }
   .login-box input { width:100%; padding:12px 16px; border:2.5px solid var(--border); border-radius:14px; font-family:'Nunito',sans-serif; font-size:16px; font-weight:700; text-align:center; letter-spacing:3px; outline:none; margin-bottom:16px; }
   .login-box input:focus { border-color:var(--blue); }
- 
+
   /* SEP */
   .sep { height:2px; background:var(--border); border-radius:2px; margin:18px 0; }
- 
+
   /* EMPTY */
   .empty-state { text-align:center; padding:40px 20px; color:var(--text-light); }
   .empty-state .e-icon { font-size:48px; margin-bottom:10px; }
   .empty-state p { font-weight:700; font-size:15px; }
- 
+
   /* ADMIN2 */
   .commission-big { font-family:'Fredoka One',cursive; font-size:42px; color:var(--purple); text-align:center; margin:10px 0; }
- 
+
+  /* Admin2 period breakdown */
+  .period-row { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; background:var(--bg); border-radius:12px; margin-bottom:8px; }
+  .period-row .pr-label { font-weight:800; font-size:14px; }
+  .period-row .pr-val   { font-family:'Fredoka One',cursive; font-size:16px; color:var(--purple); }
+
   /* EMP SUMMARY */
   .emp-summary-card { background:linear-gradient(135deg,#1cb0f6 0%,#0a91d1 100%); border-radius:20px; padding:20px; margin-bottom:16px; box-shadow:0 6px 0 rgba(10,145,209,0.4); }
   .emp-summary-card .summary-title { font-family:'Fredoka One',cursive; font-size:18px; color:rgba(255,255,255,0.85); margin-bottom:14px; }
@@ -170,7 +175,7 @@
   .emp-summary-item .esi-val   { font-family:'Fredoka One',cursive; font-size:20px; color:#fff; margin-top:3px; }
   .emp-summary-item.full-width { grid-column:1/-1; background:rgba(255,255,255,0.25); }
   .emp-summary-item.highlight .esi-val { color:#d7ffb8; }
- 
+
   @media (max-width:500px) {
     .panel-cards { flex-direction:column; align-items:center; }
     .panel-card  { max-width:100%; width:100%; }
@@ -181,14 +186,14 @@
 </style>
 </head>
 <body>
- 
+
 <div class="loader-overlay" id="loader">
   <div class="spinner"></div>
   <p id="loader-msg">Loading…</p>
 </div>
- 
+
 <div id="toast"></div>
- 
+
 <!-- LANDING -->
 <div id="landing">
   <div class="logo-box">
@@ -202,7 +207,7 @@
     <div class="panel-card admin2"   onclick="openPanel('admin2')"><div class="icon">💜</div><div class="card-title">Admin 2</div><div class="card-sub">Commission</div></div>
   </div>
 </div>
- 
+
 <!-- ADMIN 1 LOGIN -->
 <div id="screen-admin1-login" class="screen">
   <div class="topbar"><button class="back-btn" onclick="goHome()">←</button><span class="panel-name" style="color:var(--green)">👑 Admin 1</span></div>
@@ -212,7 +217,7 @@
     <button class="btn btn-green btn-full" onclick="checkAdmin1Login()">🚀 Login</button>
   </div></div>
 </div>
- 
+
 <!-- ADMIN 1 MAIN -->
 <div id="screen-admin1" class="screen">
   <div class="topbar"><button class="back-btn" onclick="logoutAdmin1()">←</button><span class="panel-name" style="color:var(--green)">👑 Admin 1</span><span class="badge" id="a1-period-badge">— Period —</span></div>
@@ -251,7 +256,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- EMPLOYEE PANEL -->
 <div id="screen-employee" class="screen">
   <div class="topbar"><button class="back-btn" onclick="goHome()">←</button><span class="panel-name" style="color:var(--blue)">⚡ Employee</span><span class="badge" id="emp-period-badge">— Period —</span></div>
@@ -264,7 +269,7 @@
     </div>
   </div>
 </div>
- 
+
 <!-- ADMIN 2 LOGIN -->
 <div id="screen-admin2-login" class="screen">
   <div class="topbar"><button class="back-btn" onclick="goHome()">←</button><span class="panel-name" style="color:var(--purple)">💜 Admin 2</span></div>
@@ -274,20 +279,27 @@
     <button class="btn btn-purple btn-full" onclick="checkAdmin2Login()">🚀 Login</button>
   </div></div>
 </div>
- 
+
 <!-- ADMIN 2 MAIN -->
 <div id="screen-admin2" class="screen">
-  <div class="topbar"><button class="back-btn" onclick="logoutAdmin2()">←</button><span class="panel-name" style="color:var(--purple)">💜 Admin 2</span><span class="badge" style="background:#f0e0ff;color:#7b2fbe" id="a2-period-badge">— Period —</span></div>
+  <div class="topbar"><button class="back-btn" onclick="logoutAdmin2()">←</button><span class="panel-name" style="color:var(--purple)">💜 Admin 2</span><span class="badge" style="background:#f0e0ff;color:#7b2fbe" id="a2-period-badge">All Time</span></div>
   <div class="content">
     <div class="card">
-      <div class="card-header"><h3>🏦 Commission Balance</h3></div>
+      <div class="card-header"><h3>🏦 Total Commission Balance</h3></div>
+      <div style="font-size:13px;font-weight:700;color:var(--text-light);text-align:center;margin-bottom:4px">Accumulated across ALL periods</div>
       <div class="commission-big" id="a2-commission">Rp 0</div>
-      <div style="text-align:center;color:var(--text-light);font-size:13px;font-weight:700;margin-bottom:16px">Total penalty collected from employees</div>
+      <div style="text-align:center;color:var(--text-light);font-size:13px;font-weight:700;margin-bottom:16px">Total penalties collected − payments received</div>
       <button class="btn btn-purple btn-full" onclick="openPaymentModal()">💳 Record Payment Received</button>
+      <div style="margin-top:10px"></div>
+      <button class="btn btn-red btn-full" onclick="resetCommission()">🔄 Reset Commission & History</button>
+    </div>
+    <div class="card">
+      <div class="card-header"><h3>🧾 Payment History</h3></div>
+      <div id="a2-history"><div class="empty-state"><div class="e-icon">📭</div><p>No payments recorded yet.</p></div></div>
     </div>
   </div>
 </div>
- 
+
 <!-- MODALS -->
 <div class="modal-overlay" id="modal-add-job">
   <div class="modal">
@@ -302,7 +314,7 @@
     </div>
   </div>
 </div>
- 
+
 <div class="modal-overlay" id="modal-apply-done">
   <div class="modal">
     <h2>✅ Mark as Done</h2>
@@ -314,7 +326,7 @@
     </div>
   </div>
 </div>
- 
+
 <div class="modal-overlay" id="modal-payment">
   <div class="modal">
     <h2>💳 Record Payment</h2>
@@ -326,27 +338,31 @@
     </div>
   </div>
 </div>
- 
+
 <script>
 // ── Supabase ─────────────────────────────────────────────────
 const SUPABASE_URL = 'https://cdimuzzydtzteebitnca.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_KBAx-97-WWBBhY7sh0bYfw_cVhCnfnW';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
- 
+
 // ── State ────────────────────────────────────────────────────
+// state.jobs & state.config are always scoped to the CURRENT period (Admin1/Employee)
+// state.allJobs & state.allPayments are ALL-TIME (Admin2 only)
 let state = {
-  config:   { period_label: null, period_value: null, bonus_balance: null },
-  jobs:     [],
-  payments: []
+  config:      { period_label: null, period_value: null, bonus_balance: null },
+  jobs:        [],   // current period only
+  payments:    [],   // current period only (for Admin1 display if needed)
+  allJobs:     [],   // all periods (Admin2)
+  allPayments: []    // all periods (Admin2)
 };
- 
+
 // ── Loader ───────────────────────────────────────────────────
 function showLoader(msg = 'Loading…') {
   document.getElementById('loader-msg').textContent = msg;
   document.getElementById('loader').classList.add('active');
 }
 function hideLoader() { document.getElementById('loader').classList.remove('active'); }
- 
+
 // ── Toast ────────────────────────────────────────────────────
 function toast(msg, ms = 2400) {
   const t = document.getElementById('toast');
@@ -354,11 +370,11 @@ function toast(msg, ms = 2400) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), ms);
 }
- 
+
 // ── Modals ───────────────────────────────────────────────────
 function openModal(id)  { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
- 
+
 // ── Navigation ───────────────────────────────────────────────
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -378,39 +394,48 @@ async function openPanel(panel) {
     document.getElementById('admin2-pw').value = '';
   } else {
     showScreen('screen-employee');
-    await loadAll();
+    await loadPeriodScoped();
     renderEmployee();
   }
 }
- 
-// ── Load all from Supabase ───────────────────────────────────
-async function loadAll() {
+
+// ── Load PERIOD-SCOPED data (Admin1 + Employee) ──────────────
+// Jobs and applications are filtered by the current period_value.
+async function loadPeriodScoped() {
   showLoader('Fetching data…');
   try {
-    const [cfgRes, jobsRes, appsRes] = await Promise.all([
-      sb.from('config').select('*').eq('id', 1).single(),
-      sb.from('jobs').select('*').order('created_at', { ascending: true }),
-      sb.from('applications').select('*').order('submitted_at', { ascending: true }),
-    ]);
-
+    const cfgRes = await sb.from('config').select('*').eq('id', 1).single();
     if (cfgRes.error && cfgRes.error.code !== 'PGRST116') throw cfgRes.error;
-    if (jobsRes.error)  throw jobsRes.error;
-    if (appsRes.error)  throw appsRes.error;
-
     state.config = cfgRes.data || { period_label: null, period_value: null, bonus_balance: null };
 
-    // Only load payments belonging to the current period
     const periodValue = state.config.period_value || '';
-    const payRes = await sb.from('payments').select('*').eq('period_value', periodValue).order('recorded_at', { ascending: true });
-    if (payRes.error) throw payRes.error;
-    state.payments = payRes.data || [];
+
+    // Jobs scoped to current period
+    const jobsRes = await sb.from('jobs')
+      .select('*')
+      .eq('period_value', periodValue)
+      .order('created_at', { ascending: true });
+    if (jobsRes.error) throw jobsRes.error;
+
+    // Applications for those jobs
+    const jobIds = (jobsRes.data || []).map(j => j.id);
+    let appsData = [];
+    if (jobIds.length) {
+      const appsRes = await sb.from('applications')
+        .select('*')
+        .in('job_id', jobIds)
+        .order('submitted_at', { ascending: true });
+      if (appsRes.error) throw appsRes.error;
+      appsData = appsRes.data || [];
+    }
 
     const appsMap = {};
-    (appsRes.data || []).forEach(a => {
+    appsData.forEach(a => {
       if (!appsMap[a.job_id]) appsMap[a.job_id] = [];
       appsMap[a.job_id].push(a);
     });
     state.jobs = (jobsRes.data || []).map(j => ({ ...j, applications: appsMap[j.id] || [] }));
+
   } catch (err) {
     toast('❌ DB error: ' + err.message);
     console.error(err);
@@ -418,8 +443,34 @@ async function loadAll() {
     hideLoader();
   }
 }
- 
-// ── Overdue check ────────────────────────────────────────────
+
+// ── Load ALL-TIME data (Admin2 only) ─────────────────────────
+async function loadAllTime() {
+  showLoader('Fetching all data…');
+  try {
+    const cfgRes = await sb.from('config').select('*').eq('id', 1).single();
+    if (cfgRes.error && cfgRes.error.code !== 'PGRST116') throw cfgRes.error;
+    state.config = cfgRes.data || { period_label: null, period_value: null, bonus_balance: null };
+
+    // ALL jobs across all periods
+    const jobsRes = await sb.from('jobs').select('*').order('created_at', { ascending: true });
+    if (jobsRes.error) throw jobsRes.error;
+    state.allJobs = jobsRes.data || [];
+
+    // ALL payments across all periods
+    const payRes = await sb.from('payments').select('*').order('recorded_at', { ascending: true });
+    if (payRes.error) throw payRes.error;
+    state.allPayments = payRes.data || [];
+
+  } catch (err) {
+    toast('❌ DB error: ' + err.message);
+    console.error(err);
+  } finally {
+    hideLoader();
+  }
+}
+
+// ── Overdue check (period-scoped) ────────────────────────────
 async function checkOverduePenalties() {
   const today = new Date(); today.setHours(0,0,0,0);
   for (const job of state.jobs) {
@@ -433,27 +484,27 @@ async function checkOverduePenalties() {
     }
   }
 }
- 
+
 function isOverdue(job) {
   const today = new Date(); today.setHours(0,0,0,0);
   const dl = new Date(job.deadline); dl.setHours(0,0,0,0);
   return dl < today;
 }
- 
+
 // ══════════════════════════════════════════════════════════════
 //  ADMIN 1
 // ══════════════════════════════════════════════════════════════
 function checkAdmin1Login() {
   if (document.getElementById('admin1-pw').value === 'Hedi') {
     showScreen('screen-admin1');
-    loadAll().then(() => { checkOverduePenalties(); renderAdmin1(); });
+    loadPeriodScoped().then(() => { checkOverduePenalties(); renderAdmin1(); });
   } else {
     toast('❌ Wrong password!');
     document.getElementById('admin1-pw').value = '';
   }
 }
 function logoutAdmin1() { goHome(); }
- 
+
 function renderAdmin1() {
   const cfg = state.config;
   if (cfg.period_label) {
@@ -486,7 +537,7 @@ function renderAdmin1() {
     document.getElementById('jobs-section').style.display = 'none';
   }
 }
- 
+
 function renderA1Jobs() {
   const el = document.getElementById('a1-jobs-list');
   if (!state.jobs.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📋</div><p>No jobs yet. Add one!</p></div>'; return; }
@@ -505,7 +556,7 @@ function renderA1Jobs() {
     </div>`;
   }).join('');
 }
- 
+
 function renderA1Pending() {
   const el = document.getElementById('a1-pending-list');
   const pending = [];
@@ -520,7 +571,7 @@ function renderA1Pending() {
       </div>
     </div>`).join('');
 }
- 
+
 function renderA1Summary() {
   const base = state.config.bonus_balance || 0;
   let extra = 0, penalty = 0, approved = 0;
@@ -534,7 +585,7 @@ function renderA1Summary() {
     <div class="stat-box red"><div class="stat-label">Penalties</div><div class="stat-val">${formatRpShort(penalty)}</div></div>
     <div class="stat-box green"><div class="stat-label">Approved</div><div class="stat-val">${approved}</div></div>`;
 }
- 
+
 async function setPeriod() {
   const val = document.getElementById('period-input').value;
   if (!val) { toast('⚠️ Please select a month!'); return; }
@@ -545,13 +596,15 @@ async function setPeriod() {
   hideLoader();
   if (error) { toast('❌ ' + error.message); return; }
   state.config.period_label = label; state.config.period_value = val;
+  // Reload jobs for the new period
+  await loadPeriodScoped();
   toast('✅ Period set: ' + label); renderAdmin1();
 }
 function changePeriod() {
   document.getElementById('period-form').style.display='block';
   document.getElementById('period-display').style.display='none';
 }
- 
+
 async function setBonus() {
   const val = parseInt(document.getElementById('bonus-input').value);
   if (!val || val <= 0) { toast('⚠️ Enter a valid bonus amount!'); return; }
@@ -566,31 +619,36 @@ function changeBonus() {
   document.getElementById('bonus-form').style.display='block';
   document.getElementById('bonus-display').style.display='none';
 }
- 
+
 let _applyJobId = null;
 function openAddJobModal() {
   ['job-title-input','job-deadline-input','job-bonus-input','job-penalty-input'].forEach(id => document.getElementById(id).value='');
   openModal('modal-add-job');
 }
- 
+
 async function addJob() {
-  const title   = document.getElementById('job-title-input').value.trim();
+  const title    = document.getElementById('job-title-input').value.trim();
   const deadline = document.getElementById('job-deadline-input').value;
-  const bonus   = parseInt(document.getElementById('job-bonus-input').value);
-  const penalty = parseInt(document.getElementById('job-penalty-input').value);
-  if (!title)          { toast('⚠️ Enter job title!'); return; }
-  if (!deadline)       { toast('⚠️ Set a deadline!'); return; }
-  if (!bonus  || bonus  <= 0) { toast('⚠️ Enter extra bonus!'); return; }
+  const bonus    = parseInt(document.getElementById('job-bonus-input').value);
+  const penalty  = parseInt(document.getElementById('job-penalty-input').value);
+  if (!title)            { toast('⚠️ Enter job title!'); return; }
+  if (!deadline)         { toast('⚠️ Set a deadline!'); return; }
+  if (!bonus   || bonus   <= 0) { toast('⚠️ Enter extra bonus!'); return; }
   if (!penalty || penalty <= 0) { toast('⚠️ Enter penalty amount!'); return; }
   document.getElementById('btn-add-job').disabled = true;
   showLoader('Adding job…');
-  const {data, error} = await sb.from('jobs').insert({title, deadline, bonus, penalty, penalized:false, penalty_applied:false}).select().single();
+  // Store period_value with each job so it's always scoped
+  const {data, error} = await sb.from('jobs').insert({
+    title, deadline, bonus, penalty,
+    penalized: false, penalty_applied: false,
+    period_value: state.config.period_value || ''
+  }).select().single();
   hideLoader(); document.getElementById('btn-add-job').disabled = false;
   if (error) { toast('❌ ' + error.message); return; }
   state.jobs.push({...data, applications:[]});
   closeModal('modal-add-job'); toast('🎯 Job added: ' + title); renderAdmin1();
 }
- 
+
 async function deleteJob(jobId) {
   if (!confirm('Delete this job?')) return;
   showLoader('Deleting…');
@@ -600,7 +658,7 @@ async function deleteJob(jobId) {
   state.jobs = state.jobs.filter(j => j.id !== jobId);
   toast('🗑️ Job deleted.'); renderAdmin1();
 }
- 
+
 async function approveApp(jobId, appId) {
   showLoader('Approving…');
   const {error} = await sb.from('applications').update({status:'approved'}).eq('id', appId);
@@ -612,7 +670,7 @@ async function approveApp(jobId, appId) {
   job.penalized = false;
   toast('✅ Approved!'); renderAdmin1();
 }
- 
+
 async function rejectApp(jobId, appId) {
   showLoader('Rejecting…');
   const {error} = await sb.from('applications').update({status:'rejected'}).eq('id', appId);
@@ -621,7 +679,7 @@ async function rejectApp(jobId, appId) {
   state.jobs.find(j => j.id === jobId).applications.find(a => a.id === appId).status = 'rejected';
   toast('❌ Rejected.'); renderAdmin1();
 }
- 
+
 // ══════════════════════════════════════════════════════════════
 //  EMPLOYEE
 // ══════════════════════════════════════════════════════════════
@@ -637,7 +695,7 @@ function renderEmployee() {
   document.getElementById('emp-period-badge').textContent = cfg.period_label;
   renderEmpSummary(); renderEmpJobs();
 }
- 
+
 function renderEmpSummary() {
   const base = state.config.bonus_balance || 0;
   let extra = 0, penalties = 0, pending = 0;
@@ -659,7 +717,7 @@ function renderEmpSummary() {
       <div class="emp-summary-item full-width"><div class="esi-label">Estimated Net Bonus</div><div class="esi-val" style="font-size:26px;color:#d7ffb8">${formatRpShort(net)}</div></div>
     </div>`;
 }
- 
+
 function renderEmpJobs() {
   const el = document.getElementById('emp-jobs-list');
   if (!state.jobs.length) { el.innerHTML = '<div class="empty-state"><div class="e-icon">📋</div><p>No jobs available yet.</p></div>'; return; }
@@ -699,13 +757,13 @@ function renderEmpJobs() {
     </div>`;
   }).join('');
 }
- 
+
 function openApplyModal(jobId) {
   _applyJobId = jobId;
   document.getElementById('apply-name-input').value = '';
   openModal('modal-apply-done');
 }
- 
+
 async function submitDone() {
   const name = document.getElementById('apply-name-input').value.trim();
   if (!name) { toast('⚠️ Enter your name!'); return; }
@@ -717,42 +775,111 @@ async function submitDone() {
   state.jobs.find(j => j.id === _applyJobId).applications.push(data);
   closeModal('modal-apply-done'); toast('📨 Submitted! Waiting for Admin 1 approval.'); renderEmployee();
 }
- 
+
 // ══════════════════════════════════════════════════════════════
-//  ADMIN 2
+//  ADMIN 2  —  ALL-TIME, period-independent
 // ══════════════════════════════════════════════════════════════
 function checkAdmin2Login() {
   if (document.getElementById('admin2-pw').value === 'Gum') {
     showScreen('screen-admin2');
-    loadAll().then(() => { checkOverduePenalties(); renderAdmin2(); });
+    loadAllTime().then(() => renderAdmin2());
   } else {
     toast('❌ Wrong password!');
     document.getElementById('admin2-pw').value = '';
   }
 }
 function logoutAdmin2() { goHome(); }
- 
+
 function renderAdmin2() {
-  document.getElementById('a2-period-badge').textContent = state.config.period_label || '—';
-  const totalPenalty = state.jobs.filter(j => j.penalized).reduce((s,j) => s+j.penalty, 0);
-  const totalPaid    = state.payments.reduce((s,p) => s+p.amount, 0);
-  document.getElementById('a2-commission').textContent = formatRp(Math.max(0, totalPenalty - totalPaid));
+  // Total penalties across ALL periods
+  const totalPenalty = state.allJobs.filter(j => j.penalized).reduce((s,j) => s + j.penalty, 0);
+  // Total payments across ALL periods
+  const totalPaid    = state.allPayments.reduce((s,p) => s + p.amount, 0);
+  const balance      = Math.max(0, totalPenalty - totalPaid);
+  document.getElementById('a2-commission').textContent = formatRp(balance);
+
+  // Payment history
+  const el = document.getElementById('a2-history');
+  if (!state.allPayments.length) {
+    el.innerHTML = '<div class="empty-state"><div class="e-icon">📭</div><p>No payments recorded yet.</p></div>';
+    return;
+  }
+  // Show newest first
+  const sorted = [...state.allPayments].sort((a,b) => new Date(b.recorded_at) - new Date(a.recorded_at));
+  el.innerHTML = sorted.map(p => {
+    let periodLabel = p.period_value || '—';
+    if (/^\d{4}-\d{2}$/.test(periodLabel)) {
+      const [yr, mo] = periodLabel.split('-');
+      periodLabel = new Date(yr, mo-1).toLocaleDateString('en-US', {month:'long', year:'numeric'});
+    }
+    return `<div class="app-item">
+      <div>
+        <div class="app-name">💳 ${formatRp(p.amount)}</div>
+        <div class="app-sub">${periodLabel} · ${formatDatetime(p.recorded_at)}</div>
+      </div>
+      <div class="app-item-actions">
+        <button class="btn btn-red btn-sm" onclick="deletePayment('${p.id}')">🗑️ Delete</button>
+      </div>
+    </div>`;
+  }).join('');
 }
- 
+
+async function resetCommission() {
+  if (!confirm('⚠️ Are you sure you want to reset the commission balance to Rp 0?')) return;
+  if (!confirm('🚨 This cannot be undone. Confirm reset?')) return;
+  showLoader('Resetting…');
+
+  // Step 1: Delete all existing payment records (clear history)
+  const { error: delErr } = await sb.from('payments').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+  if (delErr) { hideLoader(); toast('❌ ' + delErr.message); return; }
+  state.allPayments = [];
+
+  // Step 2: Calculate total penalties (kept intact)
+  const totalPenalty = state.allJobs.filter(j => j.penalized).reduce((s, j) => s + j.penalty, 0);
+
+  // Step 3: Insert a single payment equal to total penalty so balance = 0
+  if (totalPenalty > 0) {
+    const { data, error: payErr } = await sb.from('payments').insert({
+      amount: totalPenalty,
+      period_value: 'reset'
+    }).select().single();
+    if (payErr) { hideLoader(); toast('❌ ' + payErr.message); return; }
+    state.allPayments.push(data);
+  }
+
+  hideLoader();
+  toast('🔄 Commission reset to Rp 0!');
+  renderAdmin2();
+}
+
+async function deletePayment(paymentId) {
+  if (!confirm('Delete this payment record?')) return;
+  showLoader('Deleting…');
+  const { error } = await sb.from('payments').delete().eq('id', paymentId);
+  hideLoader();
+  if (error) { toast('❌ ' + error.message); return; }
+  state.allPayments = state.allPayments.filter(p => p.id !== paymentId);
+  toast('🗑️ Payment deleted.'); renderAdmin2();
+}
+
 function openPaymentModal() { document.getElementById('payment-input').value=''; openModal('modal-payment'); }
- 
+
 async function recordPayment() {
   const amount = parseInt(document.getElementById('payment-input').value);
   if (!amount || amount <= 0) { toast('⚠️ Enter a valid amount!'); return; }
   document.getElementById('btn-record-payment').disabled = true;
   showLoader('Recording payment…');
-  const {data, error} = await sb.from('payments').insert({amount, period_value: state.config.period_value || ''}).select().single();
+  // Payments are stored without a specific period — they reduce the global balance
+  const {data, error} = await sb.from('payments').insert({
+    amount,
+    period_value: state.config.period_value || 'all'
+  }).select().single();
   hideLoader(); document.getElementById('btn-record-payment').disabled = false;
   if (error) { toast('❌ ' + error.message); return; }
-  state.payments.push(data);
+  state.allPayments.push(data);
   closeModal('modal-payment'); toast('💳 Payment of ' + formatRp(amount) + ' recorded!'); renderAdmin2();
 }
- 
+
 // ── Helpers ──────────────────────────────────────────────────
 function formatRp(n)      { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
 function formatRpShort(n) {
@@ -771,7 +898,7 @@ function formatDatetime(s) {
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
- 
+
 document.querySelectorAll('.modal-overlay').forEach(o => {
   o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
 });
