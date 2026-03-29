@@ -285,9 +285,6 @@
       <div style="text-align:center;color:var(--text-light);font-size:13px;font-weight:700;margin-bottom:16px">Total penalty collected from employees</div>
       <button class="btn btn-purple btn-full" onclick="openPaymentModal()">💳 Record Payment Received</button>
     </div>
-    <div class="sep"></div>
-    <div class="section-title">📋 Penalized Jobs</div>
-    <div id="a2-penalty-jobs"></div>
   </div>
 </div>
  
@@ -735,19 +732,7 @@ function logoutAdmin2() { goHome(); }
 function renderAdmin2() {
   document.getElementById('a2-period-badge').textContent = state.config.period_label || '—';
   const totalPenalty = state.jobs.filter(j => j.penalized).reduce((s,j) => s+j.penalty, 0);
-  const totalPaid    = state.payments.reduce((s,p) => s+p.amount, 0);
-  document.getElementById('a2-commission').textContent = formatRp(Math.max(0, totalPenalty - totalPaid));
-  const pjEl = document.getElementById('a2-penalty-jobs');
-  const penalized = state.jobs.filter(j => j.penalized);
-  if (!penalized.length) { pjEl.innerHTML = '<div class="empty-state"><div class="e-icon">🎉</div><p>No penalized jobs yet!</p></div>'; return; }
-  pjEl.innerHTML = penalized.map(j => `
-    <div class="job-card overdue">
-      <div class="job-title">${escHtml(j.title)}</div>
-      <div class="job-meta">
-        <span class="job-tag tag-deadline">📅 ${formatDate(j.deadline)}</span>
-        <span class="job-tag tag-penalty">⚠️ ${formatRp(j.penalty)}</span>
-      </div>
-    </div>`).join('');
+  document.getElementById('a2-commission').textContent = formatRp(totalPenalty);
 }
  
 function openPaymentModal() { document.getElementById('payment-input').value=''; openModal('modal-payment'); }
