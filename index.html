@@ -387,21 +387,24 @@ async function openPanel(panel) {
 async function loadAll() {
   showLoader('Fetching data…');
   try {
-    const [cfgRes, jobsRes, appsRes, payRes] = await Promise.all([
+    const [cfgRes, jobsRes, appsRes] = await Promise.all([
       sb.from('config').select('*').eq('id', 1).single(),
       sb.from('jobs').select('*').order('created_at', { ascending: true }),
       sb.from('applications').select('*').order('submitted_at', { ascending: true }),
-      sb.from('payments').select('*').order('recorded_at', { ascending: true })
     ]);
- 
+
     if (cfgRes.error && cfgRes.error.code !== 'PGRST116') throw cfgRes.error;
     if (jobsRes.error)  throw jobsRes.error;
     if (appsRes.error)  throw appsRes.error;
-    if (payRes.error)   throw payRes.error;
- 
-    state.config   = cfgRes.data  || { period_label: null, period_value: null, bonus_balance: null };
-    state.payments = payRes.data  || [];
- 
+
+    state.config = cfgRes.data || { period_label: null, period_value: null, bonus_balance: null };
+
+    // Only load payments belonging to the current period
+    const periodValue = state.config.period_value || '';
+    const payRes = await sb.from('payments').select('*').eq('period_value', periodValue).order('recorded_at', { ascending: true });
+    if (payRes.error) throw payRes.error;
+    state.payments = payRes.data || [];
+
     const appsMap = {};
     (appsRes.data || []).forEach(a => {
       if (!appsMap[a.job_id]) appsMap[a.job_id] = [];
@@ -732,7 +735,8 @@ function logoutAdmin2() { goHome(); }
 function renderAdmin2() {
   document.getElementById('a2-period-badge').textContent = state.config.period_label || '—';
   const totalPenalty = state.jobs.filter(j => j.penalized).reduce((s,j) => s+j.penalty, 0);
-  document.getElementById('a2-commission').textContent = formatRp(totalPenalty);
+  const totalPaid    = state.payments.reduce((s,p) => s+p.amount, 0);
+  document.getElementById('a2-commission').textContent = formatRp(Math.max(0, totalPenalty - totalPaid));
 }
  
 function openPaymentModal() { document.getElementById('payment-input').value=''; openModal('modal-payment'); }
@@ -742,7 +746,7 @@ async function recordPayment() {
   if (!amount || amount <= 0) { toast('⚠️ Enter a valid amount!'); return; }
   document.getElementById('btn-record-payment').disabled = true;
   showLoader('Recording payment…');
-  const {data, error} = await sb.from('payments').insert({amount}).select().single();
+  const {data, error} = await sb.from('payments').insert({amount, period_value: state.config.period_value || ''}).select().single();
   hideLoader(); document.getElementById('btn-record-payment').disabled = false;
   if (error) { toast('❌ ' + error.message); return; }
   state.payments.push(data);
